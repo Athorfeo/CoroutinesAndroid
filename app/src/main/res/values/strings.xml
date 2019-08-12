@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">CoroutinesApp</string>
+
+    <!-- Title -->
+    <string name="title_search_movie_fragment">Search Movie</string>
+    <string name="title_shopping_cart_fragment">Shopping Cart</string>
+    <string name="title_detail_movie_fragment">Detail Movie</string>
+
+    <!-- Text -->
+    <string name="text_results">Results</string>
+    <string name="text_search_movie">Search movie</string>
+    <string name="text_image_description">Image description</string>
+    <string name="text_loading">Loading&#8230;</string>
+    <string name="text_title">Title</string>
+    <string name="text_overview">Overview</string>
+    <string name="text_detail">Detail</string>
+    <string name="text_quantity">Quantity</string>
+
+    <!-- Error -->
+    <string name="error_title_alert">Alert</string>
+    <string name="error_empty_field">Empty field</string>
+
+    <!-- Content -->
+    <string name="image_description">Image Content Description</string>
+
+    <!-- Button -->
+    <string name="btn_back">Back</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_empty_shopping_cart">Empty shopping cart</string>
+</resources>
