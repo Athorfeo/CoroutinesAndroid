@@ -30,7 +30,7 @@ class MovieRepository @Inject constructor(private val movieDao: MovieDao, privat
 
             override fun shouldQueryDb(): Boolean = true
 
-            override suspend fun loadFromDb(): List<Movie> =
+            override suspend fun loadFromDb(): LiveData<List<Movie>> =
                 movieDao.getMovies()
 
             override suspend fun queryDb() =

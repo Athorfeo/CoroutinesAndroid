@@ -1,12 +1,11 @@
 package com.athorfeo.source.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.athorfeo.source.app.model.Movie
-import io.reactivex.Completable
-import io.reactivex.Flowable
 
 @Dao
 interface MovieDao {
@@ -14,7 +13,7 @@ interface MovieDao {
     suspend fun getMovie(id: Int): Movie
 
     @Query("SELECT * FROM movies")
-    suspend fun getMovies(): List<Movie>
+    fun getMovies(): LiveData<List<Movie>>
 
     @Query("SELECT * FROM movies WHERE title LIKE :search")
     suspend fun searchMovies(search: String): List<Movie>

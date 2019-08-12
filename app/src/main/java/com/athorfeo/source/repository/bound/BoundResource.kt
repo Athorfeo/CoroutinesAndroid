@@ -1,10 +1,7 @@
 package com.athorfeo.source.repository.bound
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataScope
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.athorfeo.source.api.response.ApiEmptyResponse
 import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.api.response.ApiResponse
@@ -13,10 +10,7 @@ import com.athorfeo.source.app.model.DbResource
 import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.utility.Constants
 import com.athorfeo.source.utility.Status
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.Response
 
 abstract class BoundResource <ResponseType, ResultType>{
@@ -25,16 +19,8 @@ abstract class BoundResource <ResponseType, ResultType>{
     init {
         result.value = Resource.loading(null)
 
-        val dbSource = fetchFromDb()
-        result.addSource(dbSource){
-            result.removeSource(dbSource)
-            if (shouldFetch()) {
-                boundResource(dbSource)
-            }else{
-                result.addSource(dbSource) { newData ->
-                    setValue(Resource.success(newData.data))
-                }
-            }
+        result.addSource(execute()) { newData ->
+            setValue(Resource.success(newData.data))
         }
     }
 
@@ -44,54 +30,59 @@ abstract class BoundResource <ResponseType, ResultType>{
         }
     }
 
-    private fun boundResource(dbSource: LiveData<DbResource<ResultType>>){
-        val apiResponse = fetchFromNetwork()
+    private fun execute() : LiveData<Resource<ResultType>> =
+        liveData(Dispatchers.IO){
+            val disposable = emitSource(
+                loadFromDb().map {
+                    Resource.loading(it)
+                }
+            )
 
-        result.addSource(dbSource) { newData ->
-            setValue(Resource.loading(newData.data))
-        }
+            if(shouldFetch()){
+                try {
+                    val response = service()
+                    disposable.dispose()
 
-        result.addSource(apiResponse) { response ->
-            result.removeSource(apiResponse)
-            result.removeSource(dbSource)
-
-            bindData(response)
-        }
-    }
-
-    private fun bindData(apiResponse: ApiResponse<ResponseType>){
-        when (apiResponse) {
-            is ApiSuccessResponse -> {
-
-                CoroutineScope(Dispatchers.IO).launch {
                     if(shouldQueryDb()){
-                        try {
-                            queryDb()
-                            saveToDb(apiResponse.body)
-                        } catch (ioException: Exception) {
-                            Log.i(Constants.LOG_I, ioException.localizedMessage)
-                        }
-                    }else{ saveToDb(apiResponse.body) }
+                        queryDb()
+                    }
 
-                    withContext(Dispatchers.Main){
-                        result.addSource(fetchFromDb()) { newData ->
-                            setValue(Resource.success(newData.data))
+                    when (val apiResponse = ApiResponse.create(response)) {
+                        is ApiSuccessResponse -> {
+                            saveToDb(apiResponse.body)
+
+                            emitSource(
+                                loadFromDb().map {
+                                    Resource.success(it)
+                                }
+                            )
+                        }
+                        is ApiEmptyResponse -> {
+                            emitSource(
+                                loadFromDb().map {
+                                    Resource.error(it, 0, null)
+                                }
+                            )
+                        }
+                        is ApiErrorResponse -> {
+                            emitSource(
+                                loadFromDb().map {
+                                    Resource.error(it, apiResponse.code, apiResponse.message)
+                                }
+                            )
                         }
                     }
-                }
-            }
-            is ApiEmptyResponse -> {
-                result.addSource(fetchFromDb()) { newData ->
-                    setValue(Resource.error(newData.data, 0, "EmptyResponse"))
-                }
-            }
-            is ApiErrorResponse -> {
-                result.addSource(fetchFromDb()) { newData ->
-                    setValue(Resource.error(newData.data, apiResponse.code, apiResponse.message ?: ""))
+
+                }catch(ioException: Exception){
+                    Log.i(Constants.LOG_I, ioException.localizedMessage)
+                    emitSource(
+                        loadFromDb().map {
+                            Resource.error(it, 0, ioException.localizedMessage)
+                        }
+                    )
                 }
             }
         }
-    }
 
     fun asLiveData() = result as LiveData<Resource<ResultType>>
 
@@ -100,31 +91,7 @@ abstract class BoundResource <ResponseType, ResultType>{
 
     protected abstract suspend fun service(): Response<ResponseType>
 
-    protected abstract suspend fun loadFromDb(): ResultType
+    protected abstract suspend fun loadFromDb(): LiveData<ResultType>
     protected abstract suspend fun saveToDb(response: ResponseType)
     protected abstract suspend fun queryDb()
-
-    private fun fetchFromNetwork(): LiveData<ApiResponse<ResponseType>> =
-        liveData(Dispatchers.IO){
-            try {
-                val response = service()
-                val apiResponse = ApiResponse.create(response)
-                emit(apiResponse)
-            }catch(ioException: Exception){
-                Log.i(Constants.LOG_I, ioException.localizedMessage)
-                emit(ApiErrorResponse(0, ioException.localizedMessage))
-            }
-        }
-
-    private fun fetchFromDb(): LiveData<DbResource<ResultType>> =
-        liveData(Dispatchers.IO){
-            try {
-                val response = loadFromDb()
-                val dbResponse = DbResource(Status.SUCCESS, response, null)
-                emit(dbResponse)
-            }catch(ioException: Exception){
-                Log.i(Constants.LOG_I, ioException.localizedMessage)
-                emit(DbResource(Status.ERROR, null, ioException))
-            }
-        }
 }
