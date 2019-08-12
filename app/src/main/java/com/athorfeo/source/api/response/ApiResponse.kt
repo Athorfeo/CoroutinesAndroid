@@ -13,9 +13,23 @@ sealed class ApiResponse<T>{
             Log.i(Constants.LOG_I, "CODE: ${response.code()}")
             Log.i(Constants.LOG_I, "MESSAGE: ${response.message()}")
 
-            return if (response.isSuccessful) {
+            // Error = false, Success = true
+            val isValid = if(response.isSuccessful){
+                when(response.code()){
+                    200 -> {
+                        true
+                    }
+                    else -> {
+                        false
+                    }
+                }
+            }else{
+                false
+            }
+
+            return if(isValid){
                 val body = response.body()
-                if (body == null || response.code() == 204) {
+                if (body == null) {
                     ApiEmptyResponse()
                 } else {
                     ApiSuccessResponse(
@@ -23,7 +37,7 @@ sealed class ApiResponse<T>{
                         message = response.message(),
                         body = body)
                 }
-            } else {
+            }else{
                 val msg = response.errorBody()?.string()
                 val errorMsg = if (msg.isNullOrEmpty()) {
                     response.message()
