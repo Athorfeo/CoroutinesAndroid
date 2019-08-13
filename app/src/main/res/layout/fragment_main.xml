@@ -32,7 +32,6 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
                         android:ems="10"
-                        android:imeOptions="actionSearch"
                         android:id="@+id/searchEditText" android:layout_weight="1"
                         android:hint="@string/text_search_movie"
                         tools:ignore="Autofill"/>

@@ -1,6 +1,7 @@
 package com.athorfeo.source.app.ui.main
 
 import androidx.lifecycle.*
+import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.app.model.Movie
 import com.athorfeo.source.repository.MovieRepository
 import com.athorfeo.source.app.viewmodel.BaseViewModel
@@ -22,9 +23,13 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
                 resource.process(
                     {
                         resource.data?.let {
-                            if(it.isNotEmpty()){
-                                _movies.value = it
-                            }
+                            _movies.value =
+                                if(it.isNotEmpty()){
+                                    it
+                                }else{
+                                    setError(ErrorResource(resource.code,resource.message))
+                                    listOf()
+                                }
                         }
                     },
                     {

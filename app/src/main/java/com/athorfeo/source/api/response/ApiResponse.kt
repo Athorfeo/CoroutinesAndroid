@@ -3,6 +3,7 @@ package com.athorfeo.source.api.response
 import android.util.Log
 import com.athorfeo.source.utility.Constants
 import retrofit2.Response
+import java.net.HttpURLConnection
 
 
 @Suppress("unused")
@@ -16,7 +17,7 @@ sealed class ApiResponse<T>{
             // Error = false, Success = true
             val isValid = if(response.isSuccessful){
                 when(response.code()){
-                    200 -> {
+                    HttpURLConnection.HTTP_OK -> {
                         true
                     }
                     else -> {

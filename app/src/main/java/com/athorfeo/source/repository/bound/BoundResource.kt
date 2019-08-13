@@ -20,7 +20,7 @@ abstract class BoundResource <ResponseType, ResultType>{
         result.value = Resource.loading(null)
 
         result.addSource(execute()) { newData ->
-            setValue(Resource.success(newData.data))
+            setValue(newData)
         }
     }
 

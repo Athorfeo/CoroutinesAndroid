@@ -9,6 +9,7 @@ import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.di.Injectable
 import com.athorfeo.source.utility.DialogUtil
+import java.net.HttpURLConnection
 
 open class BaseFragment: Fragment(), Injectable {
     protected lateinit var loadingDialog: AlertDialog
@@ -29,22 +30,27 @@ open class BaseFragment: Fragment(), Injectable {
     }
 
     protected fun ErrorResource.process(){
-        val message = this.message
-        when(this.code){
-            1 -> {
-                errorDialog.apply {
-                    setTitle("Error 1")
-                    setMessage("Mensaje Error 1")
-                    show()
+        errorDialog.also {
+            it.setTitle(getString(R.string.error_title_error))
+
+            when(this.code){
+                HttpURLConnection.HTTP_INTERNAL_ERROR,
+                HttpURLConnection.HTTP_UNAVAILABLE,
+                HttpURLConnection.HTTP_VERSION -> {
+                    it.setMessage(getString(R.string.error_msg_http_internal_error))
+                }
+
+                HttpURLConnection.HTTP_NOT_FOUND -> {
+                    it.setMessage(getString(R.string.error_msg_http_not_found))
+                }
+
+                else -> {
+                    it.setMessage(getString(R.string.error_msg_default))
                 }
             }
-            else -> {
-                errorDialog.apply {
-                    setTitle(getString(R.string.error_title_alert))
-                    setMessage(message)
-                    show()
-                }
-            }
+
+            it.show()
         }
+
     }
 }

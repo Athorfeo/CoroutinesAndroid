@@ -3,8 +3,6 @@ package com.athorfeo.source.app.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.athorfeo.source.api.response.ApiEmptyResponse
-import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.utility.Status
 import com.athorfeo.source.app.model.Resource
