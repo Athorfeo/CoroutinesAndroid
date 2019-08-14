@@ -1,4 +1,4 @@
-package com.athorfeo.source.di
+package com.athorfeo.source.di.module
 
 import com.athorfeo.source.app.ui.main.MainFragment
 import dagger.Module

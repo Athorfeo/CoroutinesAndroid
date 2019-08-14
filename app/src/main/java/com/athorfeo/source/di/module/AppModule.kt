@@ -1,4 +1,4 @@
-package com.athorfeo.source.di
+package com.athorfeo.source.di.module
 
 import android.app.Application
 import androidx.room.Room

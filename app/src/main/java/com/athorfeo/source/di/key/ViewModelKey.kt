@@ -1,4 +1,4 @@
-package com.athorfeo.source.di
+package com.athorfeo.source.di.key
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey
