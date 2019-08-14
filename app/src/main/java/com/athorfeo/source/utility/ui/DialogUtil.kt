@@ -1,4 +1,4 @@
-package com.athorfeo.source.utility
+package com.athorfeo.source.utility.ui
 
 import android.app.Activity
 import androidx.appcompat.app.AlertDialog

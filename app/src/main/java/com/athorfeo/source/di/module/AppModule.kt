@@ -5,20 +5,30 @@ import androidx.room.Room
 import com.athorfeo.source.api.API
 import com.athorfeo.source.database.AppDatabase
 import com.athorfeo.source.database.dao.MovieDao
-import com.athorfeo.source.utility.Constants
+import com.athorfeo.source.utility.constant.Constants
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+import okhttp3.logging.HttpLoggingInterceptor
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
     @Singleton
     @Provides
     fun provideApiService(): API {
+        val client = OkHttpClient.Builder()
+            .addInterceptor(
+                HttpLoggingInterceptor().apply {
+                    this.level = HttpLoggingInterceptor.Level.BODY
+                }
+            )
+            .build()
         return Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create())
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(Constants.BASE_URL)
             .build()
             .create(API::class.java)

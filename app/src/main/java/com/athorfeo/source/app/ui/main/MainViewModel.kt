@@ -1,12 +1,11 @@
 package com.athorfeo.source.app.ui.main
 
 import androidx.lifecycle.*
-import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.app.model.Movie
 import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.repository.MovieRepository
 import com.athorfeo.source.app.viewmodel.BaseViewModel
-import com.athorfeo.source.utility.ErrorCode
+import com.athorfeo.source.utility.constant.ErrorCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

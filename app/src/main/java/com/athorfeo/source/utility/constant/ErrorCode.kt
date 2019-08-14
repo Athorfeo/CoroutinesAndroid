@@ -1,4 +1,4 @@
-package com.athorfeo.source.utility
+package com.athorfeo.source.utility.constant
 
 class ErrorCode {
     companion object{

@@ -1,18 +1,20 @@
 package com.athorfeo.source.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.athorfeo.source.R
+import com.athorfeo.source.app.model.Session
+import com.athorfeo.source.app.model.save
 import com.athorfeo.source.app.ui.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
-import kotlinx.coroutines.launch
+import com.athorfeo.source.utility.constant.Constants
 import javax.inject.Inject
 
 class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
@@ -65,6 +67,12 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
 
         binding.moviesRecycler.adapter = adapter
         binding.moviesRecycler.isNestedScrollingEnabled = false
+
+        val sesion = Session("Juan Ortiz")
+        sesion.save(context)
+
+        val newSession = Session.getSession(context)
+        Log.i(Constants.LOG_I, "Username: ${newSession.username}")
 
         subcribeUi()
     }

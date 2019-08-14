@@ -1,18 +1,18 @@
 package com.athorfeo.source.api.response
 
 import com.athorfeo.source.app.model.Movie
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class SearchMoviesResponse(
-    @field:Json(name = "page")
+    @SerializedName("page")
     val page: Int,
 
-    @field:Json(name = "results")
+    @SerializedName("results")
     val results: List<Movie>,
 
-    @field:Json(name = "total_results")
+    @SerializedName("total_results")
     val totalResults: Int,
 
-    @field:Json(name = "total_pages")
+    @SerializedName("total_pages")
     val totalPages: Int
 )

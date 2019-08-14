@@ -1,7 +1,7 @@
 package com.athorfeo.source.api.response
 
 import android.util.Log
-import com.athorfeo.source.utility.Constants
+import com.athorfeo.source.utility.constant.Constants
 import retrofit2.Response
 import java.net.HttpURLConnection
 

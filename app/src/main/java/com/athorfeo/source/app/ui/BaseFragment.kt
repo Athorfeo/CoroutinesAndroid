@@ -5,11 +5,10 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.athorfeo.source.R
-import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.di.Injectable
-import com.athorfeo.source.utility.DialogUtil
-import com.athorfeo.source.utility.ErrorCode
+import com.athorfeo.source.utility.ui.DialogUtil
+import com.athorfeo.source.utility.constant.ErrorCode
 import java.net.HttpURLConnection
 
 open class BaseFragment: Fragment(), Injectable {
