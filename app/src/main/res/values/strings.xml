@@ -31,4 +31,6 @@
     <string name="btn_back">Back</string>
     <string name="btn_next">Next</string>
     <string name="btn_empty_shopping_cart">Empty shopping cart</string>
+    <string name="btn_filter">Filter</string>
+    <string name="btn_reset">Reset</string>
 </resources>

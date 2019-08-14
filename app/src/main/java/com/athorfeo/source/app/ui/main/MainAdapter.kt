@@ -1,5 +1,4 @@
 package com.athorfeo.source.app.ui.main
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.athorfeo.source.R
 import com.athorfeo.source.app.model.Movie
+import com.athorfeo.source.databinding.ItemListMovieBinding
 
 class MainAdapter(private val listener: SearchMovieItemListener): ListAdapter<Movie, MainAdapter.ViewHolder>(
     DiffCallback()
@@ -16,10 +16,7 @@ class MainAdapter(private val listener: SearchMovieItemListener): ListAdapter<Mo
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_list_movie, parent, false
-            )
+            DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_list_movie, parent, false)
         )
     }
 
@@ -27,25 +24,36 @@ class MainAdapter(private val listener: SearchMovieItemListener): ListAdapter<Mo
         getItem(position).let { movie ->
             with(holder) {
                 itemView.tag = movie
-                bind(createOnClickListener(movie.id), movie)
+                val viewModel = MainAdapterViewModel(movie)
+                bind(
+                    createOnClickListener(viewModel, movie),
+                    viewModel)
             }
         }
     }
 
-    private fun createOnClickListener(movieId: Int): View.OnClickListener {
+    private fun createOnClickListener(viewModel: MainAdapterViewModel, item: Movie): View.OnClickListener {
         return View.OnClickListener {
             when(it.id){
-                R.id.buttonAdd -> { listener.onClickItem(true, movieId) }
-                R.id.buttonRemove -> { listener.onClickItem(false, movieId)}
+                R.id.buttonAdd -> {
+                    //listener.onClickItem(true, movieId)
+                    item.quantity = item.quantity.plus(1)
+                    viewModel.quantity.set(item.quantity)
+                }
+                R.id.buttonRemove -> {
+                    //listener.onClickItem(false, movieId)
+                    item.quantity = item.quantity.minus(1)
+                    viewModel.quantity.set(item.quantity)
+                }
             }
         }
     }
 
-    class ViewHolder (private val binding: com.athorfeo.source.databinding.ItemListMovieBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(listener: View.OnClickListener, movie: Movie){
+    class ViewHolder (private val binding: ItemListMovieBinding) : RecyclerView.ViewHolder(binding.root){
+        fun bind(listener: View.OnClickListener, viewModel: MainAdapterViewModel){
             with(binding) {
                 clickListener = listener
-                viewModel = MainAdapterViewModel(movie)
+                this.viewModel = viewModel
                 executePendingBindings()
             }
         }
@@ -63,6 +71,6 @@ class MainAdapter(private val listener: SearchMovieItemListener): ListAdapter<Mo
     }
 
     interface SearchMovieItemListener{
-        fun onClickItem(isAdd: Boolean, movieId: Int)
+        fun onClickItem(action: Boolean, movieId: Int)
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -18,10 +19,12 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentMainBinding
     private lateinit var model: MainViewModel
+    private lateinit var adapter: MainAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        //binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         return binding.root
     }
 
@@ -29,13 +32,15 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
         super.onViewCreated(view, savedInstanceState)
         model = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
-        val adapter = MainAdapter(this)
-        init(adapter)
+        adapter = MainAdapter(this)
+        init()
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.buttonSearch -> {searchMovie()}
+            R.id.buttonFilter -> {model.filter()}
+            R.id.buttonReset -> {model.reset()}
         }
     }
 
@@ -43,15 +48,15 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
         searchMovie()
     }
 
-    override fun onClickItem(isAdd: Boolean, movieId: Int) {
-        if(isAdd){
+    override fun onClickItem(action: Boolean, movieId: Int) {
+        if(action){
             //updateShoppingCart(ShoppingCartEntity(movieId, 1))
         }else{
             //updateShoppingCart(ShoppingCartEntity(movieId, 1), false)
         }
     }
 
-    private fun init(adapter: MainAdapter){
+    private fun init(){
         binding.viewModel = model
         binding.clickListener = this
         binding.swipeRefreshLayout.setOnRefreshListener(this)
@@ -59,10 +64,10 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
         binding.moviesRecycler.adapter = adapter
         binding.moviesRecycler.isNestedScrollingEnabled = false
 
-        subcribeUi(adapter)
+        subcribeUi()
     }
 
-    private fun subcribeUi(adapter: MainAdapter){
+    private fun subcribeUi(){
         model.isLoading.observe(viewLifecycleOwner, Observer {
             binding.swipeRefreshLayout.isRefreshing = it
         })

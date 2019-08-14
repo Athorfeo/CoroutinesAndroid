@@ -9,6 +9,5 @@ class MainAdapterViewModel(movie: Movie?): ViewModel() {
 
     val id = ObservableField(this.movie.id)
     val title = ObservableField(this.movie.title)
-    val overview = ObservableField(this.movie.overview)
-    val titleString = ObservableField(this.movie.id)
+    val quantity = ObservableField(this.movie.quantity)
 }
