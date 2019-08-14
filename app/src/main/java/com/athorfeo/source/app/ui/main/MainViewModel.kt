@@ -6,6 +6,7 @@ import com.athorfeo.source.app.model.Movie
 import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.repository.MovieRepository
 import com.athorfeo.source.app.viewmodel.BaseViewModel
+import com.athorfeo.source.utility.ErrorCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,21 +26,28 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
                 resource.process(
                     {
                         resource.data?.let {
-                            _movies.value =
-                                if(it.isNotEmpty()){
-                                    it
-                                }else{
-                                    setError(ErrorResource(resource.code,resource.message))
-                                    listOf()
-                                }
+                            if (_movies.value != it) {
+                                _movies.value =
+                                    if(it.isNotEmpty()){
+                                        it
+                                    }else{
+                                        setError(resource.code,resource.message)
+                                        listOf()
+                                    }
+                            }
                         }
                     },
                     {
                         resource.data?.let{
-                            _movies.value =
-                                if(it.isNotEmpty()){
-                                    it
-                                }else{listOf()}
+                            if (_movies.value != it) {
+                                _movies.value =
+                                    if(it.isNotEmpty()){
+                                        it
+                                    }else{
+                                        setError(resource.code,resource.message)
+                                        listOf()
+                                    }
+                            }
                         }
                     }
                 )
@@ -65,8 +73,13 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
         }*/
 
         viewModelScope.launch(Dispatchers.Default){
-            val list = searchMovie.value?.data?.filter { it.quantity > 0 }
-            _movies.postValue(list)
+            val list = _movies.value?.filter { it.quantity > 0 }
+            if(list.isNullOrEmpty()){
+                postError(ErrorCode.DATA_EMPTY)
+                reset()
+            }else{
+                _movies.postValue(list)
+            }
         }
     }
 

@@ -15,8 +15,11 @@ open class BaseViewModel: ViewModel() {
     private val _isError: MutableLiveData<ErrorResource> by lazy { MutableLiveData<ErrorResource>()}
     val isError: LiveData<ErrorResource> by lazy{ _isError }
 
-    private fun setLoading(boolean: Boolean){_isLoading.value = boolean}
-    fun setError(error: ErrorResource){_isError.value = error}
+    private fun setLoading(boolean: Boolean){ _isLoading.value = boolean }
+    private fun postLoading(boolean: Boolean){ _isLoading.postValue(boolean) }
+
+    fun setError(code: Int?, message: String? = null){ _isError.value = ErrorResource(code, message) }
+    fun postError(code: Int?, message: String? = null){ _isError.postValue(ErrorResource(code, message)) }
 
     /**
      * Resource Handler
@@ -35,7 +38,7 @@ open class BaseViewModel: ViewModel() {
             }
             Status.ERROR -> {
                 setLoading(false)
-                setError(ErrorResource(this.code, this.message))
+                setError(this.code, this.message)
             }
         }
     }
@@ -52,7 +55,7 @@ open class BaseViewModel: ViewModel() {
             Status.ERROR -> {
                 setLoading(false)
                 onError()
-                setError(ErrorResource(this.code, this.message))
+                setError(this.code, this.message)
             }
         }
     }

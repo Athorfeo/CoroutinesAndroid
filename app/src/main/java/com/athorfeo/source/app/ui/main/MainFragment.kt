@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.athorfeo.source.R
 import com.athorfeo.source.app.ui.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
@@ -76,7 +78,7 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
             it.process()
         })
 
-        model.movies.observe(this, Observer { movies ->
+        model.movies.observe(viewLifecycleOwner, Observer { movies ->
             adapter.submitList(movies)
         })
     }
