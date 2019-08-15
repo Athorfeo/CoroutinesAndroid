@@ -68,12 +68,6 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
         binding.moviesRecycler.adapter = adapter
         binding.moviesRecycler.isNestedScrollingEnabled = false
 
-        val sesion = Session("Juan Ortiz")
-        sesion.save(context)
-
-        val newSession = Session.getSession(context)
-        Log.i(Constants.LOG_I, "Username: ${newSession.username}")
-
         subcribeUi()
     }
 

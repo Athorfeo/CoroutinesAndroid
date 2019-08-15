@@ -8,7 +8,6 @@ import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 data class Session(
     val username: String = ""
@@ -16,7 +15,7 @@ data class Session(
     companion object{
         const val KEY_USER = "KEY_USER"
 
-        fun getSession(context: Context?): Session{
+        fun get(context: Context?): Session{
             return context?.let {
                 try {
                     val preferences = CollectionUtil.getPreferences(it)
