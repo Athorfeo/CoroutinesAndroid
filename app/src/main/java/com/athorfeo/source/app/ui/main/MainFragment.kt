@@ -23,7 +23,6 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentMainBinding
     private lateinit var viewModel: MainViewModel
-    private lateinit var adapter: MainAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -37,8 +36,8 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
-        adapter = MainAdapter(this)
-        init()
+        val adapter = MainAdapter(this)
+        init(adapter)
     }
 
     override fun onClick(v: View?) {
@@ -61,18 +60,18 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
         }
     }
 
-    private fun init(){
+    private fun init(adapter: MainAdapter){
         binding.viewModel = viewModel
         binding.clickListener = this
         binding.swipeRefreshLayout.setOnRefreshListener(this)
 
-        binding.moviesRecycler.adapter = adapter
-        binding.moviesRecycler.isNestedScrollingEnabled = false
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.isNestedScrollingEnabled = false
 
-        subcribeUi()
+        subcribeUi(adapter)
     }
 
-    private fun subcribeUi(){
+    private fun subcribeUi(adapter: MainAdapter){
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.swipeRefreshLayout.isRefreshing = it
         })
@@ -87,6 +86,6 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     }
 
     private fun searchMovie(){
-        viewModel.searchMovies(binding.searchEditText.text.toString())
+        viewModel.searchMovies(binding.editTextSearch.text.toString())
     }
 }
