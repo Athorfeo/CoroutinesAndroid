@@ -25,28 +25,24 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
                 resource.process(
                     {
                         resource.data?.let {
-                            if (_movies.value != it) {
-                                _movies.value =
-                                    if(it.isNotEmpty()){
-                                        it
-                                    }else{
-                                        setError(resource.code,resource.message)
-                                        listOf()
-                                    }
-                            }
+                            _movies.value =
+                                if(it.isNotEmpty()){
+                                    it
+                                }else{
+                                    setError(resource.code,resource.message)
+                                    listOf()
+                                }
                         }
                     },
                     {
                         resource.data?.let{
-                            if (_movies.value != it) {
-                                _movies.value =
-                                    if(it.isNotEmpty()){
-                                        it
-                                    }else{
-                                        setError(resource.code,resource.message)
-                                        listOf()
-                                    }
-                            }
+                            _movies.value =
+                                if(it.isNotEmpty()){
+                                    it
+                                }else{
+                                    setError(resource.code,resource.message)
+                                    listOf()
+                                }
                         }
                     }
                 )

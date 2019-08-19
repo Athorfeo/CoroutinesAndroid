@@ -22,7 +22,7 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentMainBinding
-    private lateinit var model: MainViewModel
+    private lateinit var viewModel: MainViewModel
     private lateinit var adapter: MainAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,7 +34,8 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+        binding.lifecycleOwner = viewLifecycleOwner
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
         adapter = MainAdapter(this)
         init()
@@ -43,8 +44,8 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.buttonSearch -> {searchMovie()}
-            R.id.buttonFilter -> {model.filter()}
-            R.id.buttonReset -> {model.reset()}
+            R.id.buttonFilter -> {viewModel.filter()}
+            R.id.buttonReset -> {viewModel.reset()}
         }
     }
 
@@ -61,7 +62,7 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     }
 
     private fun init(){
-        binding.viewModel = model
+        binding.viewModel = viewModel
         binding.clickListener = this
         binding.swipeRefreshLayout.setOnRefreshListener(this)
 
@@ -72,20 +73,20 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     }
 
     private fun subcribeUi(){
-        model.isLoading.observe(viewLifecycleOwner, Observer {
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.swipeRefreshLayout.isRefreshing = it
         })
 
-        model.isError.observe(viewLifecycleOwner, Observer {
+        viewModel.isError.observe(viewLifecycleOwner, Observer {
             it.process()
         })
 
-        model.movies.observe(viewLifecycleOwner, Observer { movies ->
+        viewModel.movies.observe(viewLifecycleOwner, Observer { movies ->
             adapter.submitList(movies)
         })
     }
 
     private fun searchMovie(){
-        model.searchMovies(binding.searchEditText.text.toString())
+        viewModel.searchMovies(binding.searchEditText.text.toString())
     }
 }

@@ -62,7 +62,7 @@ class MainAdapter(private val listener: SearchMovieItemListener): ListAdapter<Mo
     private class DiffCallback : DiffUtil.ItemCallback<Movie>() {
 
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.id != newItem.id //Lifehack
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
