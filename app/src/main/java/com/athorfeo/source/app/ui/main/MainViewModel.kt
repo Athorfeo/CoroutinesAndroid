@@ -6,11 +6,12 @@ import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.repository.MovieRepository
 import com.athorfeo.source.app.viewmodel.BaseViewModel
 import com.athorfeo.source.utility.constant.ErrorCode
+import com.athorfeo.source.utility.ui.DialogUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val repository: MovieRepository):  BaseViewModel(){
+class MainViewModel @Inject constructor(private val repository: MovieRepository): BaseViewModel(){
     private val search = MutableLiveData<String>()
 
     /* Resources */
@@ -29,7 +30,7 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
                                 if(it.isNotEmpty()){
                                     it
                                 }else{
-                                    setError(resource.code,resource.message)
+                                    setError(resource.code, resource.message)
                                     listOf()
                                 }
                         }
@@ -40,7 +41,7 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
                                 if(it.isNotEmpty()){
                                     it
                                 }else{
-                                    setError(resource.code,resource.message)
+                                    setError(resource.code, resource.message)
                                     listOf()
                                 }
                         }

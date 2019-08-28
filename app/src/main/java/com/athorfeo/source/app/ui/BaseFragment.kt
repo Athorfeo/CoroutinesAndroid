@@ -12,8 +12,8 @@ import com.athorfeo.source.utility.constant.ErrorCode
 import java.net.HttpURLConnection
 
 open class BaseFragment: Fragment(), Injectable {
-    protected lateinit var loadingDialog: AlertDialog
-    protected lateinit var errorDialog: AlertDialog
+    private var loadingDialog: AlertDialog? = null
+    private var errorDialog: AlertDialog? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,38 +24,41 @@ open class BaseFragment: Fragment(), Injectable {
     }
 
     override fun onDetach() {
-        loadingDialog.dismiss()
-        errorDialog.dismiss()
+        loadingDialog?.dismiss()
+        errorDialog?.dismiss()
         super.onDetach()
     }
 
     protected fun ErrorResource.process(){
-        errorDialog.also {
-            it.setTitle(getString(R.string.error_title_error))
-
-            when(this.code){
-                /* APP ERRORS */
-                ErrorCode.DATA_EMPTY -> {it.setMessage(getString(R.string.error_msg_data_empty))}
-
-                /* HTTP ERRORS */
-                HttpURLConnection.HTTP_INTERNAL_ERROR,
-                HttpURLConnection.HTTP_UNAVAILABLE,
-                HttpURLConnection.HTTP_VERSION -> {
-                    it.setMessage(getString(R.string.error_msg_http_internal_error))
-                }
-
-                HttpURLConnection.HTTP_NOT_FOUND -> {
-                    it.setMessage(getString(R.string.error_msg_http_not_found))
-                }
-
-                /* Default Message */
-                else -> {
-                    it.setMessage(getString(R.string.error_msg_default))
-                }
+        when(this.code){
+            /* APP ERRORS */
+            ErrorCode.DATA_EMPTY -> {
+                showError(getString(R.string.error_msg_data_empty))
             }
 
-            it.show()
-        }
+            /* HTTP ERRORS */
+            HttpURLConnection.HTTP_INTERNAL_ERROR,
+            HttpURLConnection.HTTP_UNAVAILABLE,
+            HttpURLConnection.HTTP_VERSION -> {
+                showError(getString(R.string.error_msg_http_internal_error))
+            }
 
+            HttpURLConnection.HTTP_NOT_FOUND -> {
+                showError(getString(R.string.error_msg_http_not_found))
+            }
+
+            /* Default Message */
+            else -> {
+                showError(getString(R.string.error_msg_default))
+            }
+        }
+    }
+
+    private fun showError(message: String, title: String = getString(R.string.error_title_error)){
+        errorDialog?.apply {
+            setTitle(title)
+            setMessage(message)
+            show()
+        }
     }
 }

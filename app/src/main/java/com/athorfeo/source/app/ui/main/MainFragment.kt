@@ -1,20 +1,18 @@
 package com.athorfeo.source.app.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.athorfeo.source.R
-import com.athorfeo.source.app.model.Session
-import com.athorfeo.source.app.model.save
 import com.athorfeo.source.app.ui.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
-import com.athorfeo.source.utility.constant.Constants
+import com.athorfeo.source.utility.ui.DialogUtil
 import javax.inject.Inject
 
 class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
@@ -22,11 +20,10 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentMainBinding
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        //binding = FragmentMainBinding.inflate(inflater, container, false)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         return binding.root
     }
@@ -34,7 +31,6 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
         val adapter = MainAdapter(this)
         init(adapter)
@@ -49,7 +45,14 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     }
 
     override fun onRefresh() {
-        searchMovie()
+        activity?.let{
+            DialogUtil.bottomConfirm(
+                it,
+                arrayOf(getString(R.string.text_question_sure_reset)),
+                {searchMovie()},
+                {binding.swipeRefreshLayout.isRefreshing = false}
+            ).show()
+        }
     }
 
     override fun onClickItem(action: Boolean, movieId: Int) {

@@ -55,7 +55,7 @@ open class BaseViewModel: ViewModel() {
             Status.ERROR -> {
                 setLoading(false)
                 onError()
-                setError(this.code, this.message)
+                //setError(this.code, this.message)
             }
         }
     }

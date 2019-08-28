@@ -5,6 +5,7 @@
     <string name="title_search_movie_fragment">Search Movie</string>
     <string name="title_shopping_cart_fragment">Shopping Cart</string>
     <string name="title_detail_movie_fragment">Detail Movie</string>
+    <string name="title_information">Information</string>
 
     <!-- Text -->
     <string name="text_results">Results</string>
@@ -14,7 +15,8 @@
     <string name="text_title">Title</string>
     <string name="text_overview">Overview</string>
     <string name="text_detail">Detail</string>
-    <string name="text_quantity">Quantity</string>
+    <string name="text_question_sure_reset">Are you sure to reset data?</string>
+    <string name="text_empty">Empty</string>
 
     <!-- Error -->
     <string name="error_title_alert">Alert</string>
@@ -34,4 +36,6 @@
     <string name="btn_empty_shopping_cart">Empty shopping cart</string>
     <string name="btn_filter">Filter</string>
     <string name="btn_reset">Reset</string>
+    <string name="btn_accept">Accept</string>
+    <string name="btn_cancel">Cancel</string>
 </resources>
