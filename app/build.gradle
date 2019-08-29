@@ -71,7 +71,8 @@ dependencies {
     def room_version = "2.1.0"
     def dagger_version = "2.16"
     def leakcanary_version = "2.0-beta-2"
-    def fragment_ktx = "1.2.0-alpha02"
+    def fragment_ktx_version = "1.2.0-alpha02"
+    def preference_version = "1.0.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -85,8 +86,9 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
     implementation "androidx.cardview:cardview:$cardview_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
+    implementation "androidx.preference:preference:$preference_version"
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
-    implementation "androidx.fragment:fragment-ktx:$fragment_ktx"
 
     /* Test Unit */
     testImplementation 'junit:junit:4.12'

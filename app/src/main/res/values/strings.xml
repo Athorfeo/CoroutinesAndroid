@@ -3,8 +3,7 @@
 
     <!-- Title -->
     <string name="title_search_movie_fragment">Search Movie</string>
-    <string name="title_shopping_cart_fragment">Shopping Cart</string>
-    <string name="title_detail_movie_fragment">Detail Movie</string>
+    <string name="title_settings_fragment">Settings</string>
     <string name="title_information">Information</string>
 
     <!-- Text -->

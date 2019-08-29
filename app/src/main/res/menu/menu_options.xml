@@ -3,8 +3,8 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".app.ui.MainActivity">
 
-    <item android:id="@+id/shoppingCartFragment"
-          android:title="Shopping Cart"
-          android:icon="@drawable/ic_shopping_cart"
+    <item android:id="@+id/settingsFragment"
+          android:title="@string/title_settings_fragment"
+          android:icon="@drawable/ic_settings"
           app:showAsAction="ifRoom"/>
 </menu>
