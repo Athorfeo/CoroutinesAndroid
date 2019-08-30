@@ -77,6 +77,7 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     private fun subcribeUi(adapter: MainAdapter){
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.swipeRefreshLayout.isRefreshing = it
+            setLoading(it)
         })
 
         viewModel.isError.observe(viewLifecycleOwner, Observer {

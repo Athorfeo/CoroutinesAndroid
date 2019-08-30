@@ -1,8 +1,9 @@
 package com.athorfeo.source.utility.ui
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.view.View
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import com.athorfeo.source.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -12,24 +13,27 @@ class DialogUtil {
     companion object {
         fun normal(activity: Activity): AlertDialog {
             val builder = AlertDialog.Builder(activity).apply {
-                setPositiveButton("Aceptar", null)
+                setPositiveButton(activity.getString(R.string.btn_accept), null)
             }
             return builder.create()
         }
 
         fun progress(activity: Activity): AlertDialog {
-           val builder = AlertDialog.Builder(activity)
-            builder.setView(activity.layoutInflater.inflate(R.layout.dialog_loading, activity.findViewById(android.R.id.content), false))
-            return builder
-                .setCancelable(false)
-                .create()
+           return AlertDialog.Builder(activity, R.style.Dialog_Progress)
+               .setView(activity.layoutInflater.inflate(R.layout.dialog_loading, activity.findViewById(android.R.id.content),
+                   false))
+               .setCancelable(false)
+               .create()
+               .apply {
+                   window?.setLayout(WRAP_CONTENT, WRAP_CONTENT)
+               }
         }
 
         /**
          *
          *  */
         fun bottomConfirm(activity: Activity, strings: Array<String>, positiveCallback: (() -> Unit)?= null, negativeCallback: (() -> Unit)?= null): BottomSheetDialog {
-            val dialog = BottomSheetDialog(activity, R.style.DialogConfirm)
+            val dialog = BottomSheetDialog(activity, R.style.Dialog_Confirm)
 
             val view =  activity.layoutInflater.inflate(
                 R.layout.dialog_confirm,

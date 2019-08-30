@@ -29,6 +29,14 @@ open class BaseFragment: Fragment(), Injectable {
         super.onDetach()
     }
 
+    protected fun setLoading(isLoading: Boolean){
+        if(isLoading){
+            loadingDialog?.show()
+        }else{
+            loadingDialog?.hide()
+        }
+    }
+
     protected fun ErrorResource.process(){
         when(this.code){
             /* APP ERRORS */

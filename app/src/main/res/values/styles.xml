@@ -26,11 +26,15 @@
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
     </style>
 
-    <style name="DialogConfirm" parent="Theme.AppCompat.Light.Dialog">
+    <style name="Dialog.Confirm" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+    </style>
 
+    <style name="Dialog.Progress" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
 </resources>
