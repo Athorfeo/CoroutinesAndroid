@@ -37,4 +37,17 @@
     <string name="btn_reset">Reset</string>
     <string name="btn_accept">Accept</string>
     <string name="btn_cancel">Cancel</string>
+
+    <!-- Arrays -->
+    <string-array
+            name="languages_key">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+
+    <string-array
+            name="languages_value">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>
