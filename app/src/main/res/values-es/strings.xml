@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CoroutinesApp</string>
+    <string name="btn_accept" translatable="false">Aceptar</string>
+    <string name="btn_back">Atrás</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_empty_shopping_cart">Carro de compras vacío</string>
+    <string name="btn_filter">Filtrar</string>
+    <string name="btn_next">Siguiente</string>
+    <string name="btn_reset">Reestablecer</string>
+    <string name="error_empty_field">Campo vacío</string>
+    <string name="error_msg_data_empty">Datos vacíos</string>
+    <string name="error_msg_default">Un error ha ocurrido, intente de nuevo</string>
+    <string name="error_msg_http_internal_error">Error interno del servidor</string>
+    <string name="error_msg_http_not_found">Página no encontrada</string>
+    <string name="error_title_alert">Alerta</string>
+    <string name="error_title_error">Error</string>
+    <string name="image_description">Image Content Description</string>
+    <string name="text_detail">Detalle</string>
+    <string name="text_empty">Vacío</string>
+    <string name="text_image_description">Descipción de imagen</string>
+    <string name="text_loading">Cargando&#8230;</string>
+    <string name="text_overview">Resumen</string>
+    <string name="text_question_sure_reset">Está seguro de reestablecer los datos?</string>
+    <string name="text_results">Resultados</string>
+    <string name="text_search_movie">Buscar película</string>
+    <string name="text_title">Título</string>
+    <string name="title_information">Información</string>
+    <string name="title_search_movie_fragment">Buscar película</string>
+    <string name="title_settings_fragment">Configuración</string>
+</resources>

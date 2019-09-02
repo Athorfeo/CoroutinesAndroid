@@ -21,10 +21,10 @@
     <string name="error_title_alert">Alert</string>
     <string name="error_title_error">Error</string>
     <string name="error_empty_field">Empty field</string>
-    <string name="error_msg_default">An error has occurred, try again.</string>
-    <string name="error_msg_http_internal_error">Internal server error.</string>
-    <string name="error_msg_http_not_found">Page not found.</string>
-    <string name="error_msg_data_empty">Data empty.</string>
+    <string name="error_msg_default">An error has occurred, try again</string>
+    <string name="error_msg_http_internal_error">Internal server error</string>
+    <string name="error_msg_http_not_found">Page not found</string>
+    <string name="error_msg_data_empty">Data empty</string>
 
     <!-- Content -->
     <string name="image_description">Image Content Description</string>
@@ -47,7 +47,7 @@
 
     <string-array
             name="languages_value">
-        <item>1</item>
-        <item>2</item>
+        <item>en</item>
+        <item>es</item>
     </string-array>
 </resources>

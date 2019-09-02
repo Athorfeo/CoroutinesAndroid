@@ -19,10 +19,9 @@ import dagger.android.support.HasSupportFragmentInjector
 import java.util.*
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
-    private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
+open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
+    @Inject
+    protected lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     override fun attachBaseContext(base: Context?) {
         base?.let{context ->
@@ -36,34 +35,7 @@ class MainActivity : BaseActivity() {
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,
-            R.layout.activity_main
-        )
-
-        navController = findNavController(this, R.id.nav_host_fragment)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_options, menu)
-        return true
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
-    }
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     private fun updateResources(context: Context, language: String) : Context {
         val locale = Locale(language)
