@@ -35,12 +35,12 @@ class MainAdapter(private val listener: SearchMovieItemListener): ListAdapter<Mo
     private fun createOnClickListener(viewModel: MainAdapterViewModel, item: Movie): View.OnClickListener {
         return View.OnClickListener {
             when(it.id){
-                R.id.buttonAdd -> {
+                R.id.button_add -> {
                     //listener.onClickItem(true, movieId)
                     item.quantity = item.quantity.plus(1)
                     viewModel.quantity.set(item.quantity)
                 }
-                R.id.buttonRemove -> {
+                R.id.button_remove -> {
                     //listener.onClickItem(false, movieId)
                     item.quantity = item.quantity.minus(1)
                     viewModel.quantity.set(item.quantity)

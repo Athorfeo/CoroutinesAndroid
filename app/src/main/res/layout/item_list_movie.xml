@@ -21,13 +21,13 @@
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/movie_title"
+                android:id="@+id/text_movie_title"
                 android:text="@{viewModel.title}"
                 android:paddingStart="8dp" android:paddingEnd="8dp"
                 android:paddingTop="16dp" android:paddingBottom="16dp"
                 app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/buttonAdd"
+                android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/button_add"
                 android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="8dp"/>
         <LinearLayout
@@ -36,30 +36,30 @@
                 android:elevation="1dp"
                 android:background="@drawable/bg_box"
                 android:layout_height="wrap_content"
-                android:id="@+id/linearLayout"
+                android:id="@+id/linear_layout"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonRemove" android:layout_marginEnd="8dp">
+                app:layout_constraintEnd_toStartOf="@+id/button_remove" android:layout_marginEnd="8dp">
             <TextView
                     android:text="@{viewModel.quantity.toString()}"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent" android:id="@+id/textViewQuantity" android:layout_weight="1"
+                    android:layout_height="match_parent" android:id="@+id/text_quantity" android:layout_weight="1"
                     android:padding="8dp"/>
         </LinearLayout>
         <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" app:srcCompat="@drawable/ic_add" android:id="@+id/buttonAdd"
+                android:layout_height="match_parent" app:srcCompat="@drawable/ic_add" android:id="@+id/button_add"
                 app:layout_constraintTop_toTopOf="parent"
                 android:onClick="@{clickListener}"
                 android:contentDescription="@string/image_description"
                 android:layout_marginTop="8dp" android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/linearLayout" android:layout_marginBottom="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/linear_layout" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent" android:background="@android:color/transparent"/>
 
         <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" app:srcCompat="@drawable/ic_remove" android:id="@+id/buttonRemove"
+                android:layout_height="match_parent" app:srcCompat="@drawable/ic_remove" android:id="@+id/button_remove"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:onClick="@{clickListener}"

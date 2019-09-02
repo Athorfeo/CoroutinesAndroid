@@ -38,9 +38,9 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.buttonSearch -> {searchMovie()}
-            R.id.buttonFilter -> {viewModel.filter()}
-            R.id.buttonReset -> {viewModel.reset()}
+            R.id.button_search -> searchMovie()
+            R.id.button_filter -> viewModel.filter()
+            R.id.button_reset -> viewModel.reset()
         }
     }
 
@@ -50,7 +50,7 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
                 it,
                 arrayOf(getString(R.string.text_question_sure_reset)),
                 {searchMovie()},
-                {binding.swipeRefreshLayout.isRefreshing = false}
+                {binding.swipeRefresh.isRefreshing = false}
             ).show()
         }
     }
@@ -66,17 +66,17 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     private fun init(adapter: MainAdapter){
         binding.viewModel = viewModel
         binding.clickListener = this
-        binding.swipeRefreshLayout.setOnRefreshListener(this)
+        binding.swipeRefresh.setOnRefreshListener(this)
 
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.isNestedScrollingEnabled = false
+        binding.recycler.adapter = adapter
+        binding.recycler.isNestedScrollingEnabled = false
 
         subcribeUi(adapter)
     }
 
     private fun subcribeUi(adapter: MainAdapter){
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            binding.swipeRefreshLayout.isRefreshing = it
+            binding.swipeRefresh.isRefreshing = it
             setLoading(it)
         })
 
@@ -90,6 +90,6 @@ class MainFragment: BaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnR
     }
 
     private fun searchMovie(){
-        viewModel.searchMovies(binding.editTextSearch.text.toString())
+        viewModel.searchMovies(binding.inputSearch.text.toString())
     }
 }

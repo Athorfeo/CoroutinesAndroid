@@ -3,11 +3,12 @@ package com.athorfeo.source.utility.ui
 import android.app.Activity
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.DataBindingUtil
 import com.athorfeo.source.R
+import com.athorfeo.source.databinding.DialogConfirmBinding
+import com.athorfeo.source.databinding.DialogLoadingBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_confirm.view.*
 
 class DialogUtil {
     companion object {
@@ -19,9 +20,9 @@ class DialogUtil {
         }
 
         fun progress(activity: Activity): AlertDialog {
-           return AlertDialog.Builder(activity, R.style.Dialog_Progress)
-               .setView(activity.layoutInflater.inflate(R.layout.dialog_loading, activity.findViewById(android.R.id.content),
-                   false))
+            val viewBinding: DialogLoadingBinding = DataBindingUtil.inflate(activity.layoutInflater, R.layout.dialog_loading, activity.findViewById(android.R.id.content), false)
+            return AlertDialog.Builder(activity, R.style.Dialog_Progress)
+               .setView(viewBinding.root)
                .setCancelable(false)
                .create()
                .apply {
@@ -35,30 +36,27 @@ class DialogUtil {
         fun bottomConfirm(activity: Activity, strings: Array<String>, positiveCallback: (() -> Unit)?= null, negativeCallback: (() -> Unit)?= null): BottomSheetDialog {
             val dialog = BottomSheetDialog(activity, R.style.Dialog_Confirm)
 
-            val view =  activity.layoutInflater.inflate(
-                R.layout.dialog_confirm,
-                activity.findViewById(android.R.id.content),
-                false)
+            val viewBinding: DialogConfirmBinding = DataBindingUtil.inflate(activity.layoutInflater, R.layout.dialog_confirm, activity.findViewById(android.R.id.content), false)
 
             val listener = View.OnClickListener {
                 when(it.id){
-                    R.id.buttonPositive -> {
+                    R.id.button_positive -> {
                         dialog.dismiss()
                         positiveCallback?.invoke()
                     }
-                    R.id.buttonNegative -> {
+                    R.id.button_negative -> {
                         dialog.dismiss()
                         negativeCallback?.invoke()
                     }
                 }
             }
 
-            view.apply {
+            viewBinding.apply {
                 try {
-                    textViewMessage.text = strings[0]
+                    textMessage.text = strings[0]
 
                     if(strings.size > 1){
-                        textViewTitle.text = strings[1]
+                        textTitle.text = strings[1]
                     }
 
                     if(strings.size > 2){
@@ -68,7 +66,7 @@ class DialogUtil {
 
                     buttonPositive.setOnClickListener(listener)
                 }catch (exception: Exception){
-                    textViewMessage.text = activity.getString(R.string.error_msg_default)
+                    textMessage.text = activity.getString(R.string.error_msg_default)
                     buttonPositive.isEnabled = false
                 }
 
@@ -77,7 +75,7 @@ class DialogUtil {
 
 
             dialog.apply{
-                setContentView(view)
+                setContentView(viewBinding.root)
                 setCancelable(false)
             }
             return dialog
