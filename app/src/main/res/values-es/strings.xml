@@ -25,7 +25,9 @@
     <string name="text_results">Resultados</string>
     <string name="text_search_movie">Buscar película</string>
     <string name="text_title">Título</string>
+    <string name="text_preferences_language">Define el idioma de la aplicación</string>
     <string name="title_information">Información</string>
     <string name="title_search_movie_fragment">Buscar película</string>
     <string name="title_settings_fragment">Configuración</string>
+    <string name="title_preferences_language">Idioma</string>
 </resources>

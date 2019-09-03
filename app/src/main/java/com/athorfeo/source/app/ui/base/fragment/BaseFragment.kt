@@ -1,4 +1,4 @@
-package com.athorfeo.source.app.ui
+package com.athorfeo.source.app.ui.base.fragment
 
 import android.os.Bundle
 import android.view.View

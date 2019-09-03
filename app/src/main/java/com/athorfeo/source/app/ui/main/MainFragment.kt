@@ -1,9 +1,6 @@
 package com.athorfeo.source.app.ui.main
 
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.athorfeo.source.R
-import com.athorfeo.source.app.ui.BaseFragment
+import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
-import com.athorfeo.source.utility.constant.Constants
 import com.athorfeo.source.utility.ui.DialogUtil
 import javax.inject.Inject
 

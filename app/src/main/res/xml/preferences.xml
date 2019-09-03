@@ -3,10 +3,11 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
-            app:key="language"
-            app:title="Language"
-            app:summary="Define the application language"
+            app:key="@string/preference_key_language"
+            app:title="@string/title_preferences_language"
+            app:summary="@string/text_preferences_language"
             app:icon="@drawable/ic_language"
             app:entries="@array/languages_key"
-            app:entryValues="@array/languages_value"/>
+            app:entryValues="@array/languages_value"
+            app:defaultValue="en"/>
 </androidx.preference.PreferenceScreen>

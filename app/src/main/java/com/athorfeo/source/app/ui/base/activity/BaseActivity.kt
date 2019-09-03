@@ -1,27 +1,29 @@
-package com.athorfeo.source.app.ui
+package com.athorfeo.source.app.ui.base.activity
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
+import android.os.PersistableBundle
+import androidx.appcompat.app.AppCompatActivity
 import android.preference.PreferenceManager
-import android.view.Menu
-import android.view.MenuItem
-import androidx.databinding.DataBindingUtil
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.ui.*
 import com.athorfeo.source.R
-import com.athorfeo.source.databinding.ActivityMainBinding
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import java.util.*
 import javax.inject.Inject
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.athorfeo.source.utility.constant.Constants
 
 open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     protected lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: BaseActivityViewModel by viewModels { viewModelFactory }
 
     override fun attachBaseContext(base: Context?) {
         base?.let{context ->
@@ -32,10 +34,21 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 super.attachBaseContext(updateResources(context, it))
             }
         }?:run { super.attachBaseContext(this) }
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        subcribeUi()
     }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
+
+    private fun subcribeUi(){
+        viewModel.language.observe(this, Observer {
+            recreate()
+        })
+    }
 
     private fun updateResources(context: Context, language: String) : Context {
         val locale = Locale(language)

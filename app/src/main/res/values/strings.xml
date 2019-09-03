@@ -5,6 +5,7 @@
     <string name="title_search_movie_fragment">Search Movie</string>
     <string name="title_settings_fragment">Settings</string>
     <string name="title_information">Information</string>
+    <string name="title_preferences_language">Language</string>
 
     <!-- Text -->
     <string name="text_results">Results</string>
@@ -16,6 +17,7 @@
     <string name="text_detail">Detail</string>
     <string name="text_question_sure_reset">Are you sure to reset data?</string>
     <string name="text_empty">Empty</string>
+    <string name="text_preferences_language">Define the application language</string>
 
     <!-- Error -->
     <string name="error_title_alert">Alert</string>
@@ -50,4 +52,7 @@
         <item>en</item>
         <item>es</item>
     </string-array>
+
+    <!-- Preferences Key -->
+    <string name="preference_key_language">language</string>
 </resources>

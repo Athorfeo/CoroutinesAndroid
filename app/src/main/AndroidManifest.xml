@@ -21,7 +21,7 @@
             android:usesCleartextTraffic="true"
             tools:ignore="UnusedAttribute">
 
-        <activity android:name=".app.ui.BaseActivity"/>
+        <activity android:name=".app.ui.base.activity.BaseActivity"/>
 
         <activity android:name="com.athorfeo.source.app.ui.MainActivity"
                   android:theme="@style/AppTheme.NoActionBar">
