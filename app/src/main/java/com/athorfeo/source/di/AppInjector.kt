@@ -6,13 +6,13 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.athorfeo.source.app.ui.SystemApp
+import com.athorfeo.source.app.ui.App
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 
 object AppInjector {
-    fun init(application: SystemApp){
+    fun init(application: App){
         DaggerAppComponent
             .builder()
             .application(application)

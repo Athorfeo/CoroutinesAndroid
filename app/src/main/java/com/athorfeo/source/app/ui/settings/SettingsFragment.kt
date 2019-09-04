@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceFragmentCompat
 import com.athorfeo.source.R
+import com.athorfeo.source.app.ui.App
 import com.athorfeo.source.app.ui.base.activity.BaseActivityViewModel
 import com.athorfeo.source.di.Injectable
 import javax.inject.Inject
@@ -32,7 +33,6 @@ class SettingsFragment: PreferenceFragmentCompat(), Injectable, SharedPreference
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[BaseActivityViewModel::class.java]
-
     }
 
     override fun onResume() {

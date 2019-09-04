@@ -1,7 +1,7 @@
 package com.athorfeo.source.di
 
 import android.app.Application
-import com.athorfeo.source.app.ui.SystemApp
+import com.athorfeo.source.app.ui.App
 import com.athorfeo.source.di.module.AppModule
 import com.athorfeo.source.di.module.MainActivityModule
 import dagger.BindsInstance
@@ -25,5 +25,5 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
-    fun inject(application: SystemApp)
+    fun inject(application: App)
 }
