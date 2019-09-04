@@ -2,10 +2,8 @@ package com.athorfeo.source.app.ui.base.activity
 
 import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import android.preference.PreferenceManager
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.athorfeo.source.R
@@ -15,7 +13,6 @@ import java.util.*
 import javax.inject.Inject
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.athorfeo.source.utility.constant.Constants
 
 open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
@@ -44,12 +41,6 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
-    private fun subcribeUi(){
-        viewModel.language.observe(this, Observer {
-            recreate()
-        })
-    }
-
     private fun updateResources(context: Context, language: String) : Context {
         val locale = Locale(language)
         Locale.setDefault(locale)
@@ -60,5 +51,10 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
         return context.createConfigurationContext(config)
     }
 
+    private fun subcribeUi(){
+        viewModel.language.observe(this, Observer {
+            recreate()
+        })
+    }
 }
 

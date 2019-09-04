@@ -1,6 +1,7 @@
 package com.athorfeo.source.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.athorfeo.source.R
+import com.athorfeo.source.api.response.SearchMoviesResponse
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
+import com.athorfeo.source.utility.findAnnotation
 import com.athorfeo.source.utility.ui.DialogUtil
+import com.google.gson.annotations.SerializedName
 import javax.inject.Inject
 
 class MainFragment: BaseFragment(),
@@ -75,6 +79,10 @@ class MainFragment: BaseFragment(),
         binding.recycler.isNestedScrollingEnabled = false
 
         subcribeUi(adapter)
+
+        val obj = SearchMoviesResponse(0, listOf(), 0, 0)
+        val annotation : SerializedName? = obj.findAnnotation("pages")
+        Log.i("Annotation", annotation?.value ?: "Vacio")
     }
 
     private fun subcribeUi(adapter: MainAdapter){
