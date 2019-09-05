@@ -14,7 +14,7 @@ import com.athorfeo.source.R
 import com.athorfeo.source.api.response.SearchMoviesResponse
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
-import com.athorfeo.source.utility.findAnnotation
+import com.athorfeo.source.utility.findFieldAnnotation
 import com.athorfeo.source.utility.ui.DialogUtil
 import com.google.gson.annotations.SerializedName
 import javax.inject.Inject
@@ -81,7 +81,7 @@ class MainFragment: BaseFragment(),
         subcribeUi(adapter)
 
         val obj = SearchMoviesResponse(0, listOf(), 0, 0)
-        val annotation : SerializedName? = obj.findAnnotation("page")
+        val annotation : SerializedName? = obj.findFieldAnnotation("page")
         Log.i("Annotation", annotation?.value ?: "Vacio")
     }
 
