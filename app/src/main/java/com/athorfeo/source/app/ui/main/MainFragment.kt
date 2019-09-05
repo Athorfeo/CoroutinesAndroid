@@ -81,7 +81,7 @@ class MainFragment: BaseFragment(),
         subcribeUi(adapter)
 
         val obj = SearchMoviesResponse(0, listOf(), 0, 0)
-        val annotation : SerializedName? = obj.findAnnotation("pages")
+        val annotation : SerializedName? = obj.findAnnotation("page")
         Log.i("Annotation", annotation?.value ?: "Vacio")
     }
 

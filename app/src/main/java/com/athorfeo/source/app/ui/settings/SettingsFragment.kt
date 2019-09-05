@@ -2,16 +2,11 @@ package com.athorfeo.source.app.ui.settings
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.Menu
 import android.view.View
-import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceFragmentCompat
 import com.athorfeo.source.R
-import com.athorfeo.source.app.ui.App
 import com.athorfeo.source.app.ui.base.activity.BaseActivityViewModel
 import com.athorfeo.source.di.Injectable
 import javax.inject.Inject
