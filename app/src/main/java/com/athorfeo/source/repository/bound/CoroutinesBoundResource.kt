@@ -9,7 +9,7 @@ import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.api.response.ApiResponse
 import com.athorfeo.source.api.response.ApiSuccessResponse
 import com.athorfeo.source.app.model.Resource
-import com.athorfeo.source.utility.constant.Constants
+import com.athorfeo.source.utility.Constants
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Response
 
@@ -26,7 +26,7 @@ abstract class CoroutinesBoundResource <ResponseType, ResultType>{
                 emit(apiResponse)
             }catch(ioException: Exception){
                 Log.i(Constants.LOG_I, ioException.localizedMessage)
-                emit(ApiErrorResponse(0, ioException.localizedMessage))
+                emit(ApiErrorResponse<ResponseType>(0, ioException.localizedMessage))
             }
         }
 

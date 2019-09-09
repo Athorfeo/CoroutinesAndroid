@@ -7,7 +7,7 @@ import com.athorfeo.source.app.model.Movie
 import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.database.dao.MovieDao
 import com.athorfeo.source.repository.bound.BoundResource
-import com.athorfeo.source.utility.constant.Constants
+import com.athorfeo.source.utility.Constants
 import retrofit2.Response
 import javax.inject.Inject
 

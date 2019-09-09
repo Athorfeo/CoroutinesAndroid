@@ -3,7 +3,7 @@ package com.athorfeo.source.app.model
 import android.content.Context
 import android.util.Log
 import com.athorfeo.source.utility.CollectionUtil
-import com.athorfeo.source.utility.constant.Constants
+import com.athorfeo.source.utility.Constants
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +20,7 @@ data class Session(
                 try {
                     val preferences = CollectionUtil.getPreferences(it)
                     val json = preferences.getString(KEY_USER, "") ?: ""
-                    Gson().fromJson(json, Session::class.java)
+                    CollectionUtil.fromJson(json) as Session
                 }catch (exception: Exception){
                     Log.i(Constants.LOG_I, "Error: ${exception.localizedMessage}")
                     Session()

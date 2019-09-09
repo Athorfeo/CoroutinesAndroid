@@ -19,8 +19,8 @@ class CollectionUtil{
         }
 
         @JvmStatic
-        fun fromJson(json: String, type: Type): Any{
-            return Gson().fromJson(json, type)
+        inline fun <reified A>fromJson(json: String): A{
+            return Gson().fromJson(json, A::class.java)
         }
 
         @JvmStatic

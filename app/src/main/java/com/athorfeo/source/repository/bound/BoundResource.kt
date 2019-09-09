@@ -7,7 +7,7 @@ import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.api.response.ApiResponse
 import com.athorfeo.source.api.response.ApiSuccessResponse
 import com.athorfeo.source.app.model.Resource
-import com.athorfeo.source.utility.constant.Constants
+import com.athorfeo.source.utility.Constants
 import kotlinx.coroutines.*
 import retrofit2.Response
 

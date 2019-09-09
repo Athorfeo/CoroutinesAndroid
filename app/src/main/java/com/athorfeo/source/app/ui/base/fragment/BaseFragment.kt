@@ -8,7 +8,7 @@ import com.athorfeo.source.R
 import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.di.Injectable
 import com.athorfeo.source.utility.ui.DialogUtil
-import com.athorfeo.source.utility.constant.ErrorCode
+import com.athorfeo.source.utility.ErrorCode
 import java.net.HttpURLConnection
 
 open class BaseFragment: Fragment(), Injectable {

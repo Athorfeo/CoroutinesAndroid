@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDialog
 import androidx.databinding.DataBindingUtil
 import com.athorfeo.source.R
 import com.athorfeo.source.databinding.DialogConfirmBinding
@@ -30,12 +31,8 @@ class DialogUtil {
                }
         }
 
-        /**
-         *
-         *  */
         fun bottomConfirm(activity: Activity, strings: Array<String>, positiveCallback: (() -> Unit)?= null, negativeCallback: (() -> Unit)?= null): BottomSheetDialog {
             val dialog = BottomSheetDialog(activity, R.style.Dialog_Confirm)
-
             val viewBinding: DialogConfirmBinding = DataBindingUtil.inflate(activity.layoutInflater, R.layout.dialog_confirm, activity.findViewById(android.R.id.content), false)
 
             val listener = View.OnClickListener {
@@ -52,6 +49,8 @@ class DialogUtil {
             }
 
             viewBinding.apply {
+                clickListener = listener
+
                 try {
                     textMessage.text = strings[0]
 
@@ -63,16 +62,11 @@ class DialogUtil {
                         buttonPositive.text = strings[2]
                         buttonNegative.text = strings[3]
                     }
-
-                    buttonPositive.setOnClickListener(listener)
                 }catch (exception: Exception){
                     textMessage.text = activity.getString(R.string.error_msg_default)
                     buttonPositive.isEnabled = false
                 }
-
-                buttonNegative.setOnClickListener(listener)
             }
-
 
             dialog.apply{
                 setContentView(viewBinding.root)
