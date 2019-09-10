@@ -11,16 +11,21 @@ import com.athorfeo.source.R
 import com.athorfeo.source.app.ui.base.activity.BaseActivity
 import com.athorfeo.source.databinding.ActivityMainBinding
 
+/**
+ * Actividad principal de la aplicación
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 class MainActivity : BaseActivity() {
-    private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
 
+    //region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,
-            R.layout.activity_main
-        )
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         navController = findNavController(this, R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -32,17 +37,18 @@ class MainActivity : BaseActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_options, menu)
         return true
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
+    //endregion
 }
 

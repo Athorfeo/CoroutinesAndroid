@@ -5,7 +5,12 @@ import com.athorfeo.source.utility.Constants
 import retrofit2.Response
 import java.net.HttpURLConnection
 
-
+/**
+ * Maneja las respuesta de un servicio
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 @Suppress("unused")
 sealed class ApiResponse<T>{
     companion object {
@@ -51,9 +56,6 @@ sealed class ApiResponse<T>{
     }
 }
 
-/**
- * separate class for HTTP 204 responses so that we can make ApiSuccessResponse's body non-null.
- */
 class ApiEmptyResponse<T> : ApiResponse<T>()
 data class ApiSuccessResponse<T>(val code: Int, val message: String?, val body: T) : ApiResponse<T>()
 data class ApiErrorResponse<T>(val code: Int, val message: String?) : ApiResponse<T>()

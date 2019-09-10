@@ -5,6 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Entidad - Data class de una película
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 @Entity(tableName = "movies")
 data class Movie(
     @PrimaryKey

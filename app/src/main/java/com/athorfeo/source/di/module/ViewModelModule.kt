@@ -8,6 +8,7 @@ import com.athorfeo.source.app.viewmodel.AppViewModelFactory
 import com.athorfeo.source.di.key.ViewModelKey
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.multibindings.IntoMap
 import javax.inject.Singleton
 

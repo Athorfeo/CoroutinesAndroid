@@ -2,6 +2,8 @@ package com.athorfeo.source.utility
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.preference.Preference
+import android.preference.PreferenceManager
 import android.util.Log
 import com.google.gson.Gson
 import java.lang.reflect.Type
@@ -25,10 +27,7 @@ class CollectionUtil{
 
         @JvmStatic
         fun getPreferences(context: Context): SharedPreferences {
-            return context.getSharedPreferences(
-                context.applicationContext.packageName,
-                Context.MODE_PRIVATE
-            )
+            return PreferenceManager.getDefaultSharedPreferences(context)
         }
     }
 }
