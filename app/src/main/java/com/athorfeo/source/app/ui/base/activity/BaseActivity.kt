@@ -21,13 +21,9 @@ import androidx.lifecycle.ViewModelProvider
  * @date 10/09/2019
  */
 open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
-    @Inject
-    protected lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
+    @Inject protected lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    @Inject protected lateinit var viewModelFactory: ViewModelProvider.Factory
     protected val viewModel: BaseActivityViewModel by viewModels { viewModelFactory }
-
-    @Inject
-    protected lateinit var viewModelFactory: ViewModelProvider.Factory
 
     //region Lifecycle
 

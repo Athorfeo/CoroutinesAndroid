@@ -18,9 +18,9 @@ import com.athorfeo.source.databinding.ActivityMainBinding
  * @date 10/09/2019
  */
 class MainActivity : BaseActivity() {
+    private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
-    private lateinit var binding: ActivityMainBinding
 
     //region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
