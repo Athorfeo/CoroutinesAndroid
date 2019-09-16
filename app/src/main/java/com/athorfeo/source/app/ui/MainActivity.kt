@@ -39,20 +39,6 @@ class MainActivity : BaseActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
-    /**
-     * Antes de que el contexto se defina se establece el idioma de acuerdo a las preferencias
-     * compartidas
-     * @author Juan Ortiz
-     * @date 10/09/2019
-     * */
-    override fun attachBaseContext(base: Context?) {
-        attachLanguage(base)?.let{
-            super.attachBaseContext(it)
-        }?:run {
-            super.attachBaseContext(this)
-        }
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }

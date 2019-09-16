@@ -1,7 +1,10 @@
 package com.athorfeo.source.app.ui.base.activity
 
 import android.content.Context
+import android.content.ContextWrapper
+import android.os.Build
 import android.os.Bundle
+import android.os.LocaleList
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -39,16 +42,13 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
      * @author Juan Ortiz
      * @date 10/09/2019
      * */
-    /*override fun attachBaseContext(base: Context?) {
-        base?.let{context ->
-            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-            val language = preferences.getString("language", context.resources.getStringArray(R.array.languages_value)[0])
-
-            language?.let {
-                super.attachBaseContext(updateLocale(context, it))
-            }
-        }?:run { super.attachBaseContext(this) }
-    }*/
+    override fun attachBaseContext(base: Context?) {
+        attachLanguage(base)?.let{
+            super.attachBaseContext(it)
+        }?:run {
+            super.attachBaseContext(this)
+        }
+    }
 
     //endregion
 
