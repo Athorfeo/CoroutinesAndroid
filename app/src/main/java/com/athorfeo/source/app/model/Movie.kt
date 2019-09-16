@@ -15,16 +15,21 @@ import com.google.gson.annotations.SerializedName
 data class Movie(
     @PrimaryKey
     @ColumnInfo(name = "movie_id")
-    @SerializedName("id") val id: Int,
+    @SerializedName("id")
+    val id: Int,
 
     @ColumnInfo(name = "title")
-    @SerializedName("title") val title: String,
+    @SerializedName("title")
+    val title: String,
 
     @ColumnInfo(name = "original_title")
-    @SerializedName("original_title") val originalTitle: String,
+    @SerializedName("original_title")
+    val originalTitle: String,
 
     @ColumnInfo(name = "overview")
-    @SerializedName("overview") val overview: String,
+    @SerializedName("overview")
+    val overview: String,
 
-    @ColumnInfo(name = "quantity") var quantity: Int
+    @ColumnInfo(name = "quantity")
+    var quantity: Int
 )

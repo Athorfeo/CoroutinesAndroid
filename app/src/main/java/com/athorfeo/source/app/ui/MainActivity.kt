@@ -1,5 +1,6 @@
 package com.athorfeo.source.app.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -7,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.*
+import androidx.preference.PreferenceManager
 import com.athorfeo.source.R
 import com.athorfeo.source.app.ui.base.activity.BaseActivity
 import com.athorfeo.source.databinding.ActivityMainBinding
@@ -35,6 +37,20 @@ class MainActivity : BaseActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    /**
+     * Antes de que el contexto se defina se establece el idioma de acuerdo a las preferencias
+     * compartidas
+     * @author Juan Ortiz
+     * @date 10/09/2019
+     * */
+    override fun attachBaseContext(base: Context?) {
+        attachLanguage(base)?.let{
+            super.attachBaseContext(it)
+        }?:run {
+            super.attachBaseContext(this)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

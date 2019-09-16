@@ -3,7 +3,6 @@ package com.athorfeo.source.app.ui.base.activity
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.preference.PreferenceManager
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.athorfeo.source.R
@@ -13,6 +12,7 @@ import java.util.*
 import javax.inject.Inject
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 
 /**
  * Actividad base de la aplicación
@@ -39,7 +39,7 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
      * @author Juan Ortiz
      * @date 10/09/2019
      * */
-    override fun attachBaseContext(base: Context?) {
+    /*override fun attachBaseContext(base: Context?) {
         base?.let{context ->
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             val language = preferences.getString("language", context.resources.getStringArray(R.array.languages_value)[0])
@@ -48,7 +48,7 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 super.attachBaseContext(updateLocale(context, it))
             }
         }?:run { super.attachBaseContext(this) }
-    }
+    }*/
 
     //endregion
 
@@ -74,6 +74,25 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
     //endregion
 
     //region Otros
+    /**
+     * Observa todos los livedata de viewmodel
+     * @author Juan Ortiz
+     * @date 10/09/2019
+     * @param context Contexto base
+     * @param language Lenguaje seleccionado en formato locale (en, es, etc)
+     * @return Devuelve el contexto recibido con una nueva configuración de idioma
+     * */
+    protected fun attachLanguage(baseContext: Context?) : Context? {
+        baseContext?.let{context ->
+            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val language = preferences.getString("language", context.resources.getStringArray(R.array.languages_value)[0])
+            language?.let {
+                return updateLocale(context, it)
+            }
+        }
+        return null
+    }
+
     /**
      * Observa todos los livedata de viewmodel
      * @author Juan Ortiz

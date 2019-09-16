@@ -10,7 +10,7 @@
         <item>Spanish</item>
     </string-array>
 
-    <string-array name="languages_value" translatable="false">
+    <string-array name="languages_value">
         <item>en</item>
         <item>es</item>
     </string-array>
