@@ -6,6 +6,7 @@ import android.preference.Preference
 import android.preference.PreferenceManager
 import android.util.Log
 import com.google.gson.Gson
+import timber.log.Timber
 import java.lang.reflect.Type
 
 /**
@@ -16,13 +17,11 @@ import java.lang.reflect.Type
  */
 class CollectionUtil{
     companion object{
-        private val TAG = CollectionUtil::class.qualifiedName
-
         @JvmStatic
         fun toJson(obj: Any): String{
             val gson = Gson()
             val string = gson.toJson(obj)
-            Log.i(TAG, string)
+            Timber.i(string)
             return string
         }
 

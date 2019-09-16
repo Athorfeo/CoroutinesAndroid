@@ -55,24 +55,30 @@ android {
 
 dependencies {
     def app_compat_version = "1.1.0"
-    def core_version = "1.2.0-alpha03"
+    def core_version = "1.2.0-alpha04"
+    def recyclerview_version = "1.1.0-beta04"
+    def lifecycle_version = "2.2.0-alpha04"
+    def fragment_ktx_version = "1.2.0-alpha03"
     def core_testing_version = "2.0.1"
     def constraintlayout_version = "1.1.3"
     def cardview_version = "1.0.0"
-    def recyclerview_version = "1.1.0-beta03"
     def test_runner_version = "1.2.0"
     def test_espresso_version = "3.2.0"
     def material_version = "1.0.0"
     def navigation_version = "1.0.0"
-    def lifecycle_version = "2.2.0-alpha03"
     def retrofit_version = "2.6.0"
     def logging_interceptor_version = "3.6.0"
     def glide_version = "4.9.0"
     def room_version = "2.1.0"
     def dagger_version = "2.16"
     def leakcanary_version = "2.0-beta-2"
-    def fragment_ktx_version = "1.2.0-alpha02"
     def preference_version = "1.1.0"
+    def timber_version = "4.7.1"
+    def espresso_core_version = "3.2.0"
+    def espresso_version = "1.2.0"
+    def mockito_version = "2.25.0"
+    def mockito_all_version = "1.10.19"
+    def mockito_android_version = "2.25.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -135,4 +141,17 @@ dependencies {
 
     /* LeakCanary */
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+
+    /* Timber */
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    /* Espresso */
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+    androidTestImplementation "androidx.test:runner:$espresso_version"
+    androidTestImplementation "androidx.test:rules:$espresso_version"
+
+    /* Mockito */
+    androidTestImplementation "org.mockito:mockito-core:$mockito_version"
+    androidTestImplementation "org.mockito:mockito-all:$mockito_all_version"
+    androidTestImplementation "org.mockito:mockito-android:$mockito_android_version"
 }

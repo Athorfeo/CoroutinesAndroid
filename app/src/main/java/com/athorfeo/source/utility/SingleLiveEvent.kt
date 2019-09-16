@@ -1,12 +1,12 @@
 package com.athorfeo.source.utility
 
-import android.util.Log
 import androidx.annotation.MainThread
 import androidx.annotation.Nullable
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -16,15 +16,12 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @date 10/09/2019
  */
 class SingleLiveEvent<T> : MutableLiveData<T>() {
-    companion object{
-        @JvmStatic val TAG = "SingleLiveEvent"
-    }
     private val mPending = AtomicBoolean(false)
 
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         if (hasActiveObservers()) {
-            Log.w(TAG, "Multiple observers registered but only one will be notified of changes.")
+            Timber.w("Multiple observers registered but only one will be notified of changes.")
         }
 
         // Observe the internal MutableLiveData
