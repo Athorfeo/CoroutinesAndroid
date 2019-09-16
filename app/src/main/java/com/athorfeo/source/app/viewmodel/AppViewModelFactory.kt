@@ -6,6 +6,12 @@ import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 
+/**
+ * Fabrica genérica de viewmodels
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 @Singleton
 class AppViewModelFactory @Inject constructor(
     private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>

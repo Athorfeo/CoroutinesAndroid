@@ -13,6 +13,12 @@ import com.athorfeo.source.utility.Constants
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Response
 
+/**
+ * Consumo de servicio
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 abstract class CoroutinesBoundResource <ResponseType, ResultType>{
     private val result = MediatorLiveData<Resource<ResultType>>()
 

@@ -46,7 +46,7 @@ data class Session(
 }
 
 /**
- * Extention - Guarda el objeto en las preferencias compartidas.
+ * Extension - Guarda el objeto en las preferencias compartidas.
  * @author Juan Ortiz
  * @date 10/09/2019
  * */

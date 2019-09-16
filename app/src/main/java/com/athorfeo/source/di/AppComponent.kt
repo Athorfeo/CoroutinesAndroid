@@ -9,6 +9,12 @@ import dagger.Component
 import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
+/**
+ * Componente principal de la inyeccion de dependencias, acá se deben establecer todos los módulos
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 @Singleton
 @Component(
     modules = [

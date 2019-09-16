@@ -9,6 +9,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
+/**
+ * MutableLiveData que solo devuelve una vez el valor
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 class SingleLiveEvent<T> : MutableLiveData<T>() {
     companion object{
         @JvmStatic val TAG = "SingleLiveEvent"

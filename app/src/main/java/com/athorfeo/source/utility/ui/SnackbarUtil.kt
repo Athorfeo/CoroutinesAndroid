@@ -3,6 +3,12 @@ package com.athorfeo.source.utility.ui
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 
+/**
+ * Maneja los diferentes Snackbar
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 class SnackbarUtil {
     companion object{
         @JvmStatic

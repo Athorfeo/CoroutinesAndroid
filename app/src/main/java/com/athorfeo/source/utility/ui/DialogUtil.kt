@@ -4,18 +4,23 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDialog
 import androidx.databinding.DataBindingUtil
 import com.athorfeo.source.R
 import com.athorfeo.source.databinding.DialogConfirmBinding
 import com.athorfeo.source.databinding.DialogLoadingBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
+/**
+ * Utilitario que maneja los dialogos de la aplicación.
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 class DialogUtil {
     companion object {
         fun normal(activity: Activity): AlertDialog {
             val builder = AlertDialog.Builder(activity).apply {
-                setPositiveButton(activity.getString(R.string.btn_accept), null)
+                setPositiveButton(activity.getString(R.string.action_accept), null)
             }
             return builder.create()
         }

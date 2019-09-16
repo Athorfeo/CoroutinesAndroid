@@ -19,6 +19,12 @@ import com.athorfeo.source.utility.ui.DialogUtil
 import com.google.gson.annotations.SerializedName
 import javax.inject.Inject
 
+/**
+ * Fragmento que lista las peliculas
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 class MainFragment: BaseFragment(),
     View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener,
@@ -97,6 +103,7 @@ class MainFragment: BaseFragment(),
 
         viewModel.movies.observe(viewLifecycleOwner, Observer { movies ->
             adapter.submitList(movies)
+            showSuccess("Este es un mensaje", positiveCallback = {}, negativeCallback = {})
         })
     }
 

@@ -11,6 +11,12 @@ import com.athorfeo.source.utility.Constants
 import retrofit2.Response
 import javax.inject.Inject
 
+/**
+ * Maneja todos las ejecuciones con la base de datos o consumo de servicios de peliculas.
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 class MovieRepository @Inject constructor(private val movieDao: MovieDao, private val api: API):  BaseRepository(){
 
     /*fun searchMovies(search: String, page: Int): LiveData<Resource<List<Movie>>> {

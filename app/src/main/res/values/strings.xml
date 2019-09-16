@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">CoroutinesApp</string>
 
+    <!-- Preferences Key -->
+    <string name="preference_key_language" translatable="false">language</string>
+
+    <!-- Arrays -->
+    <string-array name="languages_key">
+        <item>English</item>
+        <item>Spanish</item>
+    </string-array>
+
+    <string-array name="languages_value" translatable="false">
+        <item>en</item>
+        <item>es</item>
+    </string-array>
+
     <!-- Title -->
     <string name="title_search_movie_fragment">Search Movie</string>
     <string name="title_settings_fragment">Settings</string>
@@ -19,6 +33,9 @@
     <string name="text_empty">Empty</string>
     <string name="text_preferences_language">Define the application language</string>
 
+    <!-- Success -->
+    <string name="success_title_alert">Exitoso</string>
+
     <!-- Error -->
     <string name="error_title_alert">Alert</string>
     <string name="error_title_error">Error</string>
@@ -32,27 +49,11 @@
     <string name="image_description">Image Content Description</string>
 
     <!-- Button -->
-    <string name="btn_back">Back</string>
-    <string name="btn_next">Next</string>
-    <string name="btn_empty_shopping_cart">Empty shopping cart</string>
-    <string name="btn_filter">Filter</string>
-    <string name="btn_reset">Reset</string>
-    <string name="btn_accept">Accept</string>
-    <string name="btn_cancel">Cancel</string>
-
-    <!-- Arrays -->
-    <string-array
-            name="languages_key">
-        <item>English</item>
-        <item>Spanish</item>
-    </string-array>
-
-    <string-array
-            name="languages_value">
-        <item>en</item>
-        <item>es</item>
-    </string-array>
-
-    <!-- Preferences Key -->
-    <string name="preference_key_language">language</string>
+    <string name="action_back">Back</string>
+    <string name="action_next">Next</string>
+    <string name="action_empty_shopping_cart">Empty shopping cart</string>
+    <string name="action_filter">Filter</string>
+    <string name="action_reset">Reset</string>
+    <string name="action_accept">Accept</string>
+    <string name="action_cancel">Cancel</string>
 </resources>

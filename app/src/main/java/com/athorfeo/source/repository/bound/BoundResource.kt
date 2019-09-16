@@ -11,6 +11,12 @@ import com.athorfeo.source.utility.Constants
 import kotlinx.coroutines.*
 import retrofit2.Response
 
+/**
+ * Consume un servicio y lo almacena en la base de datos
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 abstract class BoundResource <ResponseType, ResultType>{
     private val result = MediatorLiveData<Resource<ResultType>>()
 

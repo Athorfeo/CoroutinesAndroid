@@ -11,6 +11,12 @@ import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 
+/**
+ * Maneja las inyecciones de dependencias en actividades y fragmentos
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 object AppInjector {
     fun init(application: App){
         DaggerAppComponent
@@ -50,6 +56,12 @@ object AppInjector {
             })
     }
 
+    /**
+     * Inyecta las dependecias a las actividades y fragmentos si tiene el inyector.
+     * @version 1.0
+     * @author Juan Ortiz
+     * @date 10/09/2019
+     */
     private fun handleActivity(activity: Activity) {
         if (activity is HasSupportFragmentInjector) {
             AndroidInjection.inject(activity)

@@ -9,6 +9,12 @@ import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.utility.SingleLiveEvent
 
 
+/**
+ * Actividad principal de la aplicación
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 open class BaseViewModel: ViewModel() {
     val isLoading: SingleLiveEvent<Boolean> by lazy { SingleLiveEvent<Boolean>().apply { value = false } }
     val isError: SingleLiveEvent<ErrorResource> by lazy { SingleLiveEvent<ErrorResource>()}

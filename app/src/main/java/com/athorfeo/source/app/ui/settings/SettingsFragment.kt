@@ -11,6 +11,12 @@ import com.athorfeo.source.app.ui.base.activity.BaseActivityViewModel
 import com.athorfeo.source.di.Injectable
 import javax.inject.Inject
 
+/**
+ * Fragmento que maneja las preferencias del sistema
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 class SettingsFragment: PreferenceFragmentCompat(), Injectable, SharedPreferences.OnSharedPreferenceChangeListener {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

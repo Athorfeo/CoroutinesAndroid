@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CoroutinesApp</string>
-    <string name="btn_accept" translatable="false">Aceptar</string>
-    <string name="btn_back">Atrás</string>
-    <string name="btn_cancel">Cancelar</string>
-    <string name="btn_empty_shopping_cart">Carro de compras vacío</string>
-    <string name="btn_filter">Filtrar</string>
-    <string name="btn_next">Siguiente</string>
-    <string name="btn_reset">Reestablecer</string>
+    <string-array name="languages_key">
+        <item>Inglés</item>
+        <item>Español</item>
+    </string-array>
+    <string name="action_accept" translatable="false">Aceptar</string>
+    <string name="action_back">Atrás</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_empty_shopping_cart">Carro de compras vacío</string>
+    <string name="action_filter">Filtrar</string>
+    <string name="action_next">Siguiente</string>
+    <string name="action_reset">Reestablecer</string>
+    <string name="success_title_alert">Exitoso</string>
     <string name="error_empty_field">Campo vacío</string>
     <string name="error_msg_data_empty">Datos vacíos</string>
     <string name="error_msg_default">Un error ha ocurrido, intente de nuevo</string>

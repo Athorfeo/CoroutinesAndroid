@@ -1,5 +1,11 @@
 package com.athorfeo.source.utility
 
+/**
+ * Constantes usadas para la app
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 class Constants{
     companion object {
         const val LOG_I= "Information"

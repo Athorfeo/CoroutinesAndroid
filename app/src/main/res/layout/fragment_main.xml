@@ -65,14 +65,14 @@
                             android:layout_height="wrap_content" android:layout_marginEnd="16dp"
                             android:layout_marginStart="16dp">
                         <Button
-                                android:text="@string/btn_filter"
+                                android:text="@string/action_filter"
                                 android:onClick="@{clickListener}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" android:id="@+id/button_filter"
                                 android:layout_weight="1" android:layout_marginEnd="4dp"
                                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
                         <Button
-                                android:text="@string/btn_reset"
+                                android:text="@string/action_reset"
                                 android:onClick="@{clickListener}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" android:id="@+id/button_reset"

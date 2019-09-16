@@ -8,6 +8,12 @@ import android.util.Log
 import com.google.gson.Gson
 import java.lang.reflect.Type
 
+/**
+ * Utilidades para toda la app
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 class CollectionUtil{
     companion object{
         private val TAG = CollectionUtil::class.qualifiedName

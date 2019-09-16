@@ -10,9 +10,14 @@ import com.athorfeo.source.R
 import com.athorfeo.source.app.model.Movie
 import com.athorfeo.source.databinding.ItemListMovieBinding
 
-class MainAdapter(private val listener: SearchMovieItemListener): ListAdapter<Movie, MainAdapter.ViewHolder>(
-    DiffCallback()
-){
+/**
+ * Adaptador que maneja la lista de peliculas
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
+class MainAdapter(private val listener: SearchMovieItemListener):
+    ListAdapter<Movie, MainAdapter.ViewHolder>(DiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -62,7 +67,8 @@ class MainAdapter(private val listener: SearchMovieItemListener): ListAdapter<Mo
     private class DiffCallback : DiffUtil.ItemCallback<Movie>() {
 
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id != newItem.id //Lifehack
+            //Lifehack
+            return oldItem.id != newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {

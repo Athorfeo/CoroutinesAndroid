@@ -7,6 +7,12 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.athorfeo.source.app.model.Movie
 
+/**
+ * Maneja las consultas a la base de datos de pelicula
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 @Dao
 interface MovieDao {
     @Query("SELECT * FROM movies WHERE movie_id = :id LIMIT 1")

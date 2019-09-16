@@ -10,10 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Viewmodel del fragmento principal que maneja la lista de películas
+ * @version 1.0
+ * @author Juan Ortiz
+ * @date 10/09/2019
+ */
 class MainViewModel @Inject constructor(private val repository: MovieRepository): BaseViewModel(){
     private val search = MutableLiveData<String>()
-
-    /* Resources */
     private val searchMovie: LiveData<Resource<List<Movie>>> = Transformations.switchMap(search){ search -> repository.searchMovies(search, 1) }
 
     private val _movies = MediatorLiveData<List<Movie>>()
@@ -55,18 +59,6 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
     }
 
     fun filter(){
-        /*val liveData = liveData(Dispatchers.Default){
-            val list = searchMovie.value?.data?.filter { it.quantity > 0 }
-            emit(list)
-        }
-
-        viewModelScope.launch{
-            _movies.addSource(liveData){
-                _movies.removeSource(liveData)
-                _movies.value = it
-            }
-        }*/
-
         viewModelScope.launch(Dispatchers.Default){
             val list = _movies.value?.filter { it.quantity > 0 }
             if(list.isNullOrEmpty()){
