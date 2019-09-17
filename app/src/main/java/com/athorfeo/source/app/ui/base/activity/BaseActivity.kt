@@ -29,7 +29,6 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
     protected val viewModel: BaseActivityViewModel by viewModels { viewModelFactory }
 
     //region Lifecycle
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,7 +42,7 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
      * @date 10/09/2019
      * */
     override fun attachBaseContext(base: Context?) {
-        attachLanguage(base)?.let{
+        base?.updateLanguage()?.let{
             super.attachBaseContext(it)
         }?:run {
             super.attachBaseContext(this)
@@ -53,13 +52,10 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
     //endregion
 
     //region Interfaces Impl
-
     override fun supportFragmentInjector() = dispatchingAndroidInjector
-
     //endregion
 
     //region Init
-
     /**
      * Observa todos los livedata del viewmodel y establece los parámetros iniciales
      * @author Juan Ortiz
@@ -70,47 +66,31 @@ open class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
             recreate()
         })
     }
-
     //endregion
 
     //region Otros
     /**
-     * Observa todos los livedata de viewmodel
+     * Actualiza el idioma de la app de acuerdo a la configuración del sistema.
      * @author Juan Ortiz
      * @date 10/09/2019
-     * @param context Contexto base
-     * @param language Lenguaje seleccionado en formato locale (en, es, etc)
      * @return Devuelve el contexto recibido con una nueva configuración de idioma
      * */
-    protected fun attachLanguage(baseContext: Context?) : Context? {
-        baseContext?.let{context ->
-            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-            val language = preferences.getString("language", context.resources.getStringArray(R.array.languages_value)[0])
-            language?.let {
-                return updateLocale(context, it)
-            }
+    private fun Context.updateLanguage() : Context? {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val language = preferences.getString("language", resources.getStringArray(R.array.languages_value)[0])
+
+        language?.let {
+            val locale = Locale(language)
+            Locale.setDefault(locale)
+
+            val config = resources.configuration
+            config.setLocale(locale)
+
+            return createConfigurationContext(config)
         }
+
         return null
     }
-
-    /**
-     * Observa todos los livedata de viewmodel
-     * @author Juan Ortiz
-     * @date 10/09/2019
-     * @param context Contexto base
-     * @param language Lenguaje seleccionado en formato locale (en, es, etc)
-     * @return Devuelve el contexto recibido con una nueva configuración de idioma
-     * */
-    private fun updateLocale(context: Context, language: String) : Context {
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-
-        val config = context.resources.configuration
-        config.setLocale(locale)
-
-        return context.createConfigurationContext(config)
-    }
-
     //endregion
 }
 

@@ -64,7 +64,7 @@ android {
 }
 
 dependencies {
-    def app_compat_version = "1.1.0"
+    def app_compat_version = "1.1.0-rc01"
     def core_version = "1.2.0-alpha04"
     def recyclerview_version = "1.1.0-beta04"
     def lifecycle_version = "2.2.0-alpha04"
@@ -80,7 +80,7 @@ dependencies {
     def room_version = "2.1.0"
     def dagger_version = "2.16"
     def leakcanary_version = "2.0-beta-2"
-    def preference_version = "1.1.0"
+    def preference_version = "1.0.0"
     def timber_version = "4.7.1"
     def espresso_core_version = "3.2.0"
     def espresso_version = "1.2.0"
