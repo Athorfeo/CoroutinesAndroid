@@ -1,6 +1,5 @@
 package com.athorfeo.source.app.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -8,10 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.*
-import androidx.preference.PreferenceManager
 import com.athorfeo.source.R
+import com.athorfeo.source.app.model.Session
+import com.athorfeo.source.app.model.save
 import com.athorfeo.source.app.ui.base.activity.BaseActivity
 import com.athorfeo.source.databinding.ActivityMainBinding
+import timber.log.Timber
 
 /**
  * Actividad principal de la aplicación

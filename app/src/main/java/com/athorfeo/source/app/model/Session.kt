@@ -2,12 +2,14 @@ package com.athorfeo.source.app.model
 
 import android.content.Context
 import android.util.Log
-import com.athorfeo.source.utility.CollectionUtil
 import com.athorfeo.source.utility.Constants
-import com.google.gson.Gson
+import com.athorfeo.source.utility.fromJson
+import com.athorfeo.source.utility.getPreferences
+import com.athorfeo.source.utility.toJson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * Manejo de valores de sesión. Implementa ya el get y set en preferencias compartidas.
@@ -28,17 +30,17 @@ data class Session(
          * @return Si encuentra valores almacenados en las preferencias combierte el JSON en un
          * objeto, si no encuentra o genera alguna exception entonces va a generar un objeto vacio.
          * */
-        fun get(context: Context?): Session{
-            return context?.let {
-                try {
-                    val preferences = CollectionUtil.getPreferences(it)
+        fun getInstance(context: Context?): Session{
+            return try {
+                context!!.let {
+                    val preferences = it.getPreferences()
                     val json = preferences.getString(KEY_USER, "") ?: ""
-                    CollectionUtil.fromJson(json) as Session
-                }catch (exception: Exception){
-                    Log.i(Constants.LOG_I, "Error: ${exception.localizedMessage}")
-                    Session()
+                    (fromJson(json) as Session).also {
+                        Timber.d("Session obtenida correctamente")
+                    }
                 }
-            } ?:run{
+            }catch (exception: Exception) {
+                Timber.i("Error: ${exception.localizedMessage}")
                 Session()
             }
         }
@@ -53,12 +55,17 @@ data class Session(
 fun Session.save(context: Context?){
     context?.let {
         CoroutineScope(Dispatchers.Default).launch{
-            val preferences = CollectionUtil.getPreferences(context)
-            val json = CollectionUtil.toJson(this@save as Any)
-            preferences
-                .edit()
-                .putString(Session.KEY_USER, json)
-                .apply()
+            try {
+                val preferences = context.getPreferences()
+                val json = (this@save as Any).toJson()
+                preferences
+                    .edit()
+                    .putString(Session.KEY_USER, json)
+                    .apply()
+                Timber.d("Session guardada correctamente")
+            }catch (exception: Exception){
+                Timber.e(exception)
+            }
         }
     }
 }
