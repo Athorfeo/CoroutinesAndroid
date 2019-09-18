@@ -1,11 +1,13 @@
 package com.athorfeo.source.app.ui.main
 
 import androidx.lifecycle.*
+import com.athorfeo.source.api.SearchMovieRequest
+import com.athorfeo.source.api.response.SearchMoviesResponse
 import com.athorfeo.source.app.model.Movie
 import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.repository.MovieRepository
 import com.athorfeo.source.app.viewmodel.BaseViewModel
-import com.athorfeo.source.utility.ErrorCode
+import com.athorfeo.source.util.error.ErrorCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +20,11 @@ import javax.inject.Inject
  */
 class MainViewModel @Inject constructor(private val repository: MovieRepository): BaseViewModel(){
     private val search = MutableLiveData<String>()
-    private val searchMovie: LiveData<Resource<List<Movie>>> = Transformations.switchMap(search){ search -> repository.searchMovies(search, 1) }
+    private val searchMovie: LiveData<Resource<List<Movie>>> = Transformations.switchMap(search){ search ->
+        repository.searchMovies(
+            SearchMovieRequest(search, 1)
+        )
+    }
 
     private val _movies = MediatorLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> = _movies
@@ -29,24 +35,20 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
                 resource.process(
                     {
                         resource.data?.let {
-                            _movies.value =
-                                if(it.isNotEmpty()){
-                                    it
-                                }else{
-                                    setError(resource.code, resource.message)
-                                    listOf()
-                                }
+                            if(it.isNotEmpty()){
+                                _movies.value = it
+                            }else{
+                                setError(resource.code, resource.message)
+                            }
                         }
                     },
                     {
                         resource.data?.let{
-                            _movies.value =
-                                if(it.isNotEmpty()){
-                                    it
-                                }else{
-                                    setError(resource.code, resource.message)
-                                    listOf()
-                                }
+                            if(it.isNotEmpty()){
+                                _movies.value = it
+                            }else{
+                                setError(resource.code, resource.message)
+                            }
                         }
                     }
                 )
@@ -77,4 +79,6 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
             }
         }
     }
+
+    fun updateQuantity(action: Boolean, movieId: Int) = repository.addQuantity(movieId)
 }

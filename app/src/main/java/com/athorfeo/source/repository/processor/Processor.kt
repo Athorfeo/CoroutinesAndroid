@@ -1,4 +1,4 @@
-package com.athorfeo.source.repository.bound
+package com.athorfeo.source.repository.processor
 
 import android.util.Log
 import androidx.lifecycle.*
@@ -7,9 +7,11 @@ import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.api.response.ApiResponse
 import com.athorfeo.source.api.response.ApiSuccessResponse
 import com.athorfeo.source.app.model.Resource
-import com.athorfeo.source.utility.Constants
+import com.athorfeo.source.util.Constants
+import com.athorfeo.source.util.error.getCode
 import kotlinx.coroutines.*
 import retrofit2.Response
+import timber.log.Timber
 
 /**
  * Consume un servicio y lo almacena en la base de datos
@@ -17,7 +19,7 @@ import retrofit2.Response
  * @author Juan Ortiz
  * @date 10/09/2019
  */
-abstract class BoundResource <ResponseType, ResultType>{
+abstract class Processor <ResponseType, ResultType>{
     private val result = MediatorLiveData<Resource<ResultType>>()
 
     init {
@@ -77,13 +79,15 @@ abstract class BoundResource <ResponseType, ResultType>{
                         }
                     }
 
-                }catch(ioException: Exception){
-                    Log.i(Constants.LOG_I, ioException.localizedMessage)
-                    emitSource(
-                        loadFromDb().map {
-                            Resource.error(it, 0, ioException.localizedMessage)
-                        }
-                    )
+                }catch(exception: Exception){
+                    with(exception){
+                        Timber.e(this)
+                        emitSource(
+                            loadFromDb().map {
+                                Resource.error(it, getCode(), localizedMessage)
+                            }
+                        )
+                    }
                 }
             }
         }

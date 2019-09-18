@@ -6,9 +6,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.athorfeo.source.R
 import com.athorfeo.source.app.model.ErrorResource
+import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.di.Injectable
-import com.athorfeo.source.utility.ui.DialogUtil
-import com.athorfeo.source.utility.ErrorCode
+import com.athorfeo.source.util.ui.DialogUtil
+import com.athorfeo.source.util.error.ErrorCode
+import com.athorfeo.source.util.Status
 import java.net.HttpURLConnection
 
 /**
@@ -97,12 +99,17 @@ open class BaseFragment: Fragment(), Injectable {
      * */
     protected fun ErrorResource.process(){
         when(this.code){
-            /* APP ERRORS */
+            /* SYSTEM ERROR */
+            ErrorCode.INTERNET -> {
+                showError(getString(R.string.error_msg_internet))
+            }
+
+            /* DATA ERROR */
             ErrorCode.DATA_EMPTY -> {
                 showError(getString(R.string.error_msg_data_empty))
             }
 
-            /* HTTP ERRORS */
+            /* HTTP ERROR */
             HttpURLConnection.HTTP_INTERNAL_ERROR,
             HttpURLConnection.HTTP_UNAVAILABLE,
             HttpURLConnection.HTTP_VERSION -> {
@@ -116,6 +123,28 @@ open class BaseFragment: Fragment(), Injectable {
             /* Default Message */
             else -> {
                 showError(getString(R.string.error_msg_default))
+            }
+        }
+    }
+
+    /**
+     * Extension que maneja el recurso.
+     * @author Juan Ortiz
+     * @date 18/09/2019
+     * */
+    protected fun <T> Resource<T>.process(onSucess: () -> Unit, onError:  ()-> Unit){
+        when (this.status) {
+            Status.LOADING -> {
+                setLoading(true)
+            }
+            Status.SUCCESS -> {
+                setLoading(false)
+                onSucess()
+            }
+            Status.ERROR -> {
+                setLoading(false)
+                onError()
+                //setError(this.code, this.message)
             }
         }
     }

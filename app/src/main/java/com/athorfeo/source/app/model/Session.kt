@@ -1,11 +1,9 @@
 package com.athorfeo.source.app.model
 
 import android.content.Context
-import android.util.Log
-import com.athorfeo.source.utility.Constants
-import com.athorfeo.source.utility.fromJson
-import com.athorfeo.source.utility.getPreferences
-import com.athorfeo.source.utility.toJson
+import com.athorfeo.source.util.fromJson
+import com.athorfeo.source.util.getPreferences
+import com.athorfeo.source.util.toJson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

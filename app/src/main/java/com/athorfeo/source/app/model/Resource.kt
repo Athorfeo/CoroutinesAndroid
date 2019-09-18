@@ -1,6 +1,6 @@
 package com.athorfeo.source.app.model
 
-import com.athorfeo.source.utility.Status
+import com.athorfeo.source.util.Status
 
 /**
  * Recurso que se usa para los LiveData y servicios. La idea de este objeto es que maneje los tres

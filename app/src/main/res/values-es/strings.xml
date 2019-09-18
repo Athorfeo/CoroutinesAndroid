@@ -18,6 +18,7 @@
     <string name="error_msg_default">Un error ha ocurrido, intente de nuevo</string>
     <string name="error_msg_http_internal_error">Error interno del servidor</string>
     <string name="error_msg_http_not_found">Página no encontrada</string>
+    <string name="error_msg_internet">Sin conexión a internet</string>
     <string name="error_title_alert">Alerta</string>
     <string name="error_title_error">Error</string>
     <string name="image_description">Image Content Description</string>

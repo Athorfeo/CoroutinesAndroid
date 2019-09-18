@@ -1,4 +1,4 @@
-package com.athorfeo.source.utility
+package com.athorfeo.source.util
 
 inline fun <T: Any, reified A: Annotation> T.findFieldAnnotation(property: String) : A?{
     return try {

@@ -1,4 +1,4 @@
-package com.athorfeo.source.utility.ui
+package com.athorfeo.source.util.ui
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar

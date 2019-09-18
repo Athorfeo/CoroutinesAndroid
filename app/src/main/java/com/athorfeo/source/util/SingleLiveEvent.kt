@@ -1,4 +1,4 @@
-package com.athorfeo.source.utility
+package com.athorfeo.source.util
 
 import androidx.annotation.MainThread
 import androidx.annotation.Nullable

@@ -1,9 +1,8 @@
 package com.athorfeo.source.app.ui.base.activity
 
 import com.athorfeo.source.app.viewmodel.BaseViewModel
-import com.athorfeo.source.utility.SingleLiveEvent
+import com.athorfeo.source.util.SingleLiveEvent
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Manejo de las funcionalidades de las actividades base

@@ -14,8 +14,8 @@ import com.athorfeo.source.R
 import com.athorfeo.source.api.response.SearchMoviesResponse
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
-import com.athorfeo.source.utility.findFieldAnnotation
-import com.athorfeo.source.utility.ui.DialogUtil
+import com.athorfeo.source.util.findFieldAnnotation
+import com.athorfeo.source.util.ui.DialogUtil
 import com.google.gson.annotations.SerializedName
 import javax.inject.Inject
 
@@ -69,11 +69,16 @@ class MainFragment: BaseFragment(),
     }
 
     override fun onClickItem(action: Boolean, movieId: Int) {
-        if(action){
-            //updateShoppingCart(ShoppingCartEntity(movieId, 1))
-        }else{
-            //updateShoppingCart(ShoppingCartEntity(movieId, 1), false)
-        }
+        viewModel.updateQuantity(action, movieId).observe(viewLifecycleOwner, Observer {
+            it.process(
+                {
+                    showSuccess("Se agregó correctamente", positiveCallback = {}, negativeCallback = {})
+                },
+                {
+                    viewModel.setError(it.code, it.message)
+                }
+            )
+        })
     }
 
     private fun init(adapter: MainAdapter){
@@ -103,7 +108,7 @@ class MainFragment: BaseFragment(),
 
         viewModel.movies.observe(viewLifecycleOwner, Observer { movies ->
             adapter.submitList(movies)
-            showSuccess("Este es un mensaje", positiveCallback = {}, negativeCallback = {})
+            //showSuccess("Este es un mensaje", positiveCallback = {}, negativeCallback = {})
         })
     }
 

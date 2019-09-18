@@ -1,4 +1,4 @@
-package com.athorfeo.source.utility.ui
+package com.athorfeo.source.util.ui
 
 import android.app.Activity
 import android.view.View

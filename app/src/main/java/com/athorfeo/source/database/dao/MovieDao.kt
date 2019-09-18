@@ -15,6 +15,7 @@ import com.athorfeo.source.app.model.Movie
  */
 @Dao
 interface MovieDao {
+    /* SELECT */
     @Query("SELECT * FROM movies WHERE movie_id = :id LIMIT 1")
     suspend fun getMovie(id: Int): Movie
 
@@ -24,11 +25,18 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE title LIKE :search")
     suspend fun searchMovies(search: String): List<Movie>
 
+    /* INSERT */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(vararg movies: Movie)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(movie: Movie)
+    suspend fun insert(movie: Movie): Long
+
+    /* UPDATE */
+    @Query("UPDATE movies SET quantity = (SELECT (quantity + 1) FROM movies where movie_id = :id) WHERE movie_id = :id")
+    suspend fun addQuantity(id: Int): Int
+
+    /* DELETE */
 
     //@Query("DELETE FROM movies")
     @Query("DELETE FROM movies")

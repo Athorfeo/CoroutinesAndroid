@@ -1,6 +1,7 @@
 package com.athorfeo.source.app.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.athorfeo.source.api.SearchMovieRequest
 import com.athorfeo.source.util.CoroutinesTestRule
 import com.athorfeo.source.repository.MovieRepository
 import com.athorfeo.source.util.mock
@@ -8,6 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.Request
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito.*
@@ -34,6 +36,6 @@ class MainViewModelTest {
     fun empty() {
         viewModel.movies.observeForever(mock())
         viewModel.searchMovies("")
-        verify(repository).searchMovies("", 1)
+        verify(repository).searchMovies(SearchMovieRequest("", 1))
     }
 }

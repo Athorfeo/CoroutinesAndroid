@@ -1,6 +1,6 @@
 package com.athorfeo.source.app.model
 
-import com.athorfeo.source.utility.Status
+import com.athorfeo.source.util.Status
 
 /**
  * Respuesta de la base de datos
