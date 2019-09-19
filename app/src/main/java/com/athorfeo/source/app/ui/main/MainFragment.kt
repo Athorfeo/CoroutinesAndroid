@@ -70,7 +70,7 @@ class MainFragment: BaseFragment(),
     }
 
     override fun onClickItem(action: Boolean, movieId: Int) {
-        viewModel.updateQuantity(action, 1293810).observe(viewLifecycleOwner, Observer {
+        viewModel.updateQuantity(action, movieId).observe(viewLifecycleOwner, Observer {
             it.process(
                 {
                     val message =
