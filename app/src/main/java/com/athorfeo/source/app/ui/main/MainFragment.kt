@@ -53,7 +53,9 @@ class MainFragment: BaseFragment(),
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.button_search -> searchMovie()
-            R.id.button_filter -> viewModel.filter()
+            R.id.button_filter -> {
+                viewModel.filter((binding.recycler.adapter as MainAdapter).currentList)
+            }
             R.id.button_reset -> viewModel.reset()
         }
     }

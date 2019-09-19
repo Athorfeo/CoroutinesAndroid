@@ -60,9 +60,11 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
         search.value = string
     }
 
-    fun filter(){
+    fun filter(sourceList: List<Movie>){
         viewModelScope.launch(Dispatchers.Default){
-            val list = _movies.value?.filter { it.quantity > 0 }
+            //val list = _movies.value?.filter { it.quantity > 0 }
+            val list = sourceList.filter { it.quantity > 0 }
+
             if(list.isNullOrEmpty()){
                 postError(ErrorCode.DATA_EMPTY)
                 reset()

@@ -29,36 +29,29 @@ class MainAdapter(private val listener: SearchMovieItemListener):
         getItem(position).let { movie ->
             with(holder) {
                 itemView.tag = movie
-                val viewModel = MainAdapterViewModel(movie)
-                bind(
-                    createOnClickListener(viewModel, movie),
-                    viewModel)
+                bind(movie, createOnClickListener(movie))
             }
         }
     }
 
-    private fun createOnClickListener(viewModel: MainAdapterViewModel, item: Movie): View.OnClickListener {
+    private fun createOnClickListener(item: Movie): View.OnClickListener {
         return View.OnClickListener {
             when(it.id){
                 R.id.button_add -> {
                     listener.onClickItem(true, item.id)
-                    item.quantity = item.quantity.plus(1)
-                    viewModel.quantity.set(item.quantity)
                 }
                 R.id.button_remove -> {
                     listener.onClickItem(false, item.id)
-                    item.quantity = item.quantity.minus(1)
-                    viewModel.quantity.set(item.quantity)
                 }
             }
         }
     }
 
     class ViewHolder (private val binding: ItemListMovieBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(listener: View.OnClickListener, viewModel: MainAdapterViewModel){
+        fun bind(movie: Movie, listener: View.OnClickListener){
             with(binding) {
                 clickListener = listener
-                this.viewModel = viewModel
+                this.viewModel = MainAdapterViewModel(movie)
                 executePendingBindings()
             }
         }
@@ -68,7 +61,7 @@ class MainAdapter(private val listener: SearchMovieItemListener):
 
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             //Lifehack
-            return oldItem.id != newItem.id
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
