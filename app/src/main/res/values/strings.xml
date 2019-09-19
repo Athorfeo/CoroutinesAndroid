@@ -10,7 +10,7 @@
         <item>Spanish</item>
     </string-array>
 
-    <string-array name="languages_value">
+    <string-array name="languages_value" translatable="false">
         <item>en</item>
         <item>es</item>
     </string-array>
@@ -33,18 +33,23 @@
     <string name="text_empty">Empty</string>
     <string name="text_preferences_language">Define the application language</string>
 
+    <!-- Dialogs -->
     <!-- Success -->
-    <string name="success_title_alert">Exitoso</string>
+    <string name="success_title">Exitoso</string>
+
+    <string name="success_msg_database_query">The database query was successful.</string>
 
     <!-- Error -->
     <string name="error_title_alert">Alert</string>
     <string name="error_title_error">Error</string>
-    <string name="error_empty_field">Empty field</string>
+
+    <string name="error_msg_empty_field">Empty field</string>
     <string name="error_msg_default">An error has occurred, try again</string>
     <string name="error_msg_http_internal_error">Internal server error</string>
     <string name="error_msg_http_not_found">Page not found</string>
     <string name="error_msg_data_empty">Data empty</string>
     <string name="error_msg_internet">No internet connection</string>
+    <string name="error_msg_database_query">The database query failed.</string>
 
     <!-- Content -->
     <string name="image_description">Image Content Description</string>

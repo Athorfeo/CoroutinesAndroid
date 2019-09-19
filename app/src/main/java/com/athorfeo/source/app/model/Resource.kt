@@ -12,8 +12,8 @@ import com.athorfeo.source.util.Status
  */
 data class Resource<out T>(val status: Status, val data: T?, val code: Int?, val message: String?) {
     companion object {
-        fun <T> success(data: T?): Resource<T> {
-            return Resource(Status.SUCCESS, data, null, null)
+        fun <T> success(data: T?, code: Int? = null, message: String? = null): Resource<T> {
+            return Resource(Status.SUCCESS, data, code, message)
         }
 
         fun <T> error(data: T?, code: Int, msg: String?): Resource<T> {

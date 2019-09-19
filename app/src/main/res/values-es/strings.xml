@@ -12,13 +12,15 @@
     <string name="action_filter">Filtrar</string>
     <string name="action_next">Siguiente</string>
     <string name="action_reset">Reestablecer</string>
-    <string name="success_title_alert">Exitoso</string>
-    <string name="error_empty_field">Campo vacío</string>
+    <string name="success_title">Exitoso</string>
+    <string name="success_msg_database_query">La consulta a la base datos fue exitosa.</string>
+    <string name="error_msg_empty_field">Campo vacío</string>
     <string name="error_msg_data_empty">Datos vacíos</string>
     <string name="error_msg_default">Un error ha ocurrido, intente de nuevo</string>
     <string name="error_msg_http_internal_error">Error interno del servidor</string>
     <string name="error_msg_http_not_found">Página no encontrada</string>
     <string name="error_msg_internet">Sin conexión a internet</string>
+    <string name="error_msg_database_query">La consulta a la base de datos falló.</string>
     <string name="error_title_alert">Alerta</string>
     <string name="error_title_error">Error</string>
     <string name="image_description">Image Content Description</string>

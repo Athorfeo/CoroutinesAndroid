@@ -36,9 +36,12 @@ interface MovieDao {
     @Query("UPDATE movies SET quantity = (SELECT (quantity + 1) FROM movies where movie_id = :id) WHERE movie_id = :id")
     suspend fun addQuantity(id: Int): Int
 
+    @Query("UPDATE movies SET quantity = (SELECT (quantity - 1) FROM movies where movie_id = :id) WHERE movie_id = :id")
+    suspend fun removeQuantity(id: Int): Int
+
     /* DELETE */
 
     //@Query("DELETE FROM movies")
-    @Query("DELETE FROM movies")
+    @Query("DELETE FROM movies WHERE quantity = 0")
     suspend fun deleteAll()
 }

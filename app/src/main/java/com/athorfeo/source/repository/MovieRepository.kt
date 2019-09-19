@@ -9,6 +9,7 @@ import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.database.dao.MovieDao
 import com.athorfeo.source.repository.processor.Processor
 import com.athorfeo.source.repository.processor.DatabaseProcessor
+import com.athorfeo.source.util.ResponseCode
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -46,6 +47,15 @@ class MovieRepository @Inject constructor(private val movieDao: MovieDao, privat
         return object : DatabaseProcessor<Int>(){
             override suspend fun query(): Int = movieDao.addQuantity(movieId)
             override suspend fun isValidQuery(response: Int): Boolean = response > 0
+            override fun onSuccessCode(): Int = ResponseCode.INSERT_DATABASE
+        }.asLiveData()
+    }
+
+    fun removeQuantity(movieId: Int): LiveData<Resource<Int>>{
+        return object : DatabaseProcessor<Int>(){
+            override suspend fun query(): Int = movieDao.removeQuantity(movieId)
+            override suspend fun isValidQuery(response: Int): Boolean = response > 0
+            override fun onSuccessCode(): Int = ResponseCode.DELETE_DATABASE
         }.asLiveData()
     }
 }

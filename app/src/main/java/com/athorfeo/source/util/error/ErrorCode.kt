@@ -11,21 +11,23 @@ import java.net.UnknownHostException
 class ErrorCode {
     companion object{
         /* System */
-        const val DEFAULT = 0
-        const val INTERNET = 1
+        const val DEFAULT = 2000
+        const val INTERNET = 2001
+        const val QUERY_DATABASE = 2002
 
         /* Data */
-        const val DATA_EMPTY = 1000
+        const val RESPONSE_EMPTY = 2003
+        const val DATA_EMPTY = 2004
     }
 }
 
-fun Exception.getCode(): Int{
+fun Exception.getCode(forceCode: Int? = null): Int{
     var code = ErrorCode.DEFAULT
 
     when(this){
-        is UnknownHostException -> { code = ErrorCode.INTERNET
-        }
+        is UnknownHostException -> { code = ErrorCode.INTERNET }
+        is QueryDatabaseException -> { code = ErrorCode.QUERY_DATABASE }
     }
 
-    return code
+    return forceCode ?: code
 }

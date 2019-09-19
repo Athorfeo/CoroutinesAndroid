@@ -2,6 +2,9 @@ package com.athorfeo.source.repository.processor
 
 import androidx.lifecycle.*
 import com.athorfeo.source.app.model.Resource
+import com.athorfeo.source.util.ResponseCode
+import com.athorfeo.source.util.error.ErrorCode
+import com.athorfeo.source.util.error.QueryDatabaseException
 import com.athorfeo.source.util.error.getCode
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -23,6 +26,9 @@ abstract class DatabaseProcessor <T>{
         }
     }
 
+    protected open fun onSuccessCode(): Int = ResponseCode.QUERY_DATABASE
+    protected open fun onErrorCode(): Int = ErrorCode.QUERY_DATABASE
+
     protected fun setValue(newValue: Resource<T>) {
         if (result.value != newValue) {
             result.value = newValue
@@ -35,14 +41,20 @@ abstract class DatabaseProcessor <T>{
                 val response = query()
 
                 if(isValidQuery(response)){
-                    emit(Resource.success(response))
+                    emit(Resource.success(response, onSuccessCode()))
                 }else{
-                    throw Exception("El resultado de la DB no fue el esperado")
+                    throw QueryDatabaseException("El resultado de la consulta no fue válido")
                 }
             }catch(exception: Exception){
                 with(exception){
                     Timber.e(this)
-                    emit(Resource.error<T>(null, getCode(), localizedMessage))
+                    emit(
+                        Resource.error<T>(
+                            null,
+                            getCode(onErrorCode()),
+                            localizedMessage
+                        )
+                    )
                 }
             }
         }

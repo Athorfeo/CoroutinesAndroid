@@ -9,8 +9,8 @@ import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.di.Injectable
 import com.athorfeo.source.util.ui.DialogUtil
-import com.athorfeo.source.util.error.ErrorCode
 import com.athorfeo.source.util.Status
+import com.athorfeo.source.util.error.ErrorCode
 import java.net.HttpURLConnection
 
 /**
@@ -62,7 +62,7 @@ open class BaseFragment: Fragment(), Injectable {
      */
     protected fun showSuccess(
         message: String,
-        title: String = getString(R.string.success_title_alert),
+        title: String = getString(R.string.success_title),
         positiveString: String = getString(R.string.action_accept),
         negativeString: String = getString(R.string.action_cancel),
         positiveCallback: (() -> Unit)? = null,
@@ -92,8 +92,33 @@ open class BaseFragment: Fragment(), Injectable {
     }
 
     /**
+     * Extension que maneja los estados de un Resource.
+     * IMPORTANTE: si se desea modificar esta clase, debe modificar la misma extension del
+     * BaseViewModel
+     *
+     * @author Juan Ortiz
+     * @date 18/09/2019
+     * */
+    protected fun <T> Resource<T>.process(onSucess: () -> Unit, onError:  ()-> Unit){
+        when (this.status) {
+            Status.LOADING -> {
+                setLoading(true)
+            }
+            Status.SUCCESS -> {
+                setLoading(false)
+                onSucess()
+            }
+            Status.ERROR -> {
+                setLoading(false)
+                onError()
+                //setError(this.code, this.message)
+            }
+        }
+    }
+
+    /**
      * Extension de ErrorResource el cual procesa el error. Maneja los errores de acuerdo al código
-     * ya sean los definidos en ErrorCode o los de HttpURLConnection.
+     * ya sean los definidos en ResponseCode o los de HttpURLConnection.
      * @author Juan Ortiz
      * @date 10/09/2019
      * */
@@ -102,6 +127,9 @@ open class BaseFragment: Fragment(), Injectable {
             /* SYSTEM ERROR */
             ErrorCode.INTERNET -> {
                 showError(getString(R.string.error_msg_internet))
+            }
+            ErrorCode.QUERY_DATABASE -> {
+                showError(getString(R.string.error_msg_database_query))
             }
 
             /* DATA ERROR */
@@ -123,28 +151,6 @@ open class BaseFragment: Fragment(), Injectable {
             /* Default Message */
             else -> {
                 showError(getString(R.string.error_msg_default))
-            }
-        }
-    }
-
-    /**
-     * Extension que maneja el recurso.
-     * @author Juan Ortiz
-     * @date 18/09/2019
-     * */
-    protected fun <T> Resource<T>.process(onSucess: () -> Unit, onError:  ()-> Unit){
-        when (this.status) {
-            Status.LOADING -> {
-                setLoading(true)
-            }
-            Status.SUCCESS -> {
-                setLoading(false)
-                onSucess()
-            }
-            Status.ERROR -> {
-                setLoading(false)
-                onError()
-                //setError(this.code, this.message)
             }
         }
     }

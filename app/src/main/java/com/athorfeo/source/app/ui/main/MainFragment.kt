@@ -14,6 +14,7 @@ import com.athorfeo.source.R
 import com.athorfeo.source.api.response.SearchMoviesResponse
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
+import com.athorfeo.source.util.ResponseCode
 import com.athorfeo.source.util.findFieldAnnotation
 import com.athorfeo.source.util.ui.DialogUtil
 import com.google.gson.annotations.SerializedName
@@ -69,10 +70,17 @@ class MainFragment: BaseFragment(),
     }
 
     override fun onClickItem(action: Boolean, movieId: Int) {
-        viewModel.updateQuantity(action, movieId).observe(viewLifecycleOwner, Observer {
+        viewModel.updateQuantity(action, 1293810).observe(viewLifecycleOwner, Observer {
             it.process(
                 {
-                    showSuccess("Se agregó correctamente", positiveCallback = {}, negativeCallback = {})
+                    val message =
+                        when(it.code){
+                            ResponseCode.INSERT_DATABASE -> { "Se ha agregado la cantidad correctamente." }
+                            ResponseCode.DELETE_DATABASE -> { "Se ha eliminado la cantidad correctamente." }
+                            else -> { getString(R.string.success_msg_database_query) }
+                        }
+
+                    showSuccess(message, positiveCallback = {}, negativeCallback = {})
                 },
                 {
                     viewModel.setError(it.code, it.message)

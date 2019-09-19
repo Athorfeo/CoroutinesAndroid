@@ -2,11 +2,11 @@ package com.athorfeo.source.app.ui.main
 
 import androidx.lifecycle.*
 import com.athorfeo.source.api.SearchMovieRequest
-import com.athorfeo.source.api.response.SearchMoviesResponse
 import com.athorfeo.source.app.model.Movie
 import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.repository.MovieRepository
 import com.athorfeo.source.app.viewmodel.BaseViewModel
+import com.athorfeo.source.util.ResponseCode
 import com.athorfeo.source.util.error.ErrorCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -80,5 +80,11 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
         }
     }
 
-    fun updateQuantity(action: Boolean, movieId: Int) = repository.addQuantity(movieId)
+    fun updateQuantity(action: Boolean, movieId: Int) =
+        if(action){
+            repository.addQuantity(movieId)
+        }else{
+            repository.removeQuantity(movieId)
+        }
+
 }

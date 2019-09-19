@@ -1,13 +1,12 @@
 package com.athorfeo.source.repository.processor
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.athorfeo.source.api.response.ApiEmptyResponse
 import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.api.response.ApiResponse
 import com.athorfeo.source.api.response.ApiSuccessResponse
 import com.athorfeo.source.app.model.Resource
-import com.athorfeo.source.util.Constants
+import com.athorfeo.source.util.error.ErrorCode
 import com.athorfeo.source.util.error.getCode
 import kotlinx.coroutines.*
 import retrofit2.Response
@@ -66,7 +65,7 @@ abstract class Processor <ResponseType, ResultType>{
                         is ApiEmptyResponse -> {
                             emitSource(
                                 loadFromDb().map {
-                                    Resource.error(it, 0, null)
+                                    Resource.error(it, ErrorCode.RESPONSE_EMPTY, null)
                                 }
                             )
                         }
