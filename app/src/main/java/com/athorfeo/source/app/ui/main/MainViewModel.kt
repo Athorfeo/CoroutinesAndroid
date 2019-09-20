@@ -19,6 +19,9 @@ import javax.inject.Inject
  * @date 10/09/2019
  */
 class MainViewModel @Inject constructor(private val repository: MovieRepository): BaseViewModel(){
+    private val _movies = MediatorLiveData<List<Movie>>()
+    val movies: LiveData<List<Movie>> = _movies
+
     private val search = MutableLiveData<String>()
     private val searchMovie: LiveData<Resource<List<Movie>>> = Transformations.switchMap(search){ search ->
         repository.searchMovies(
@@ -26,8 +29,10 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
         )
     }
 
-    private val _movies = MediatorLiveData<List<Movie>>()
-    val movies: LiveData<List<Movie>> = _movies
+    private var filter = false
+    private fun setFilter(boolean: Boolean){ filter = boolean }
+
+
 
     init {
         viewModelScope.launch{
@@ -36,7 +41,11 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
                     {
                         resource.data?.let {
                             if(it.isNotEmpty()){
-                                _movies.value = it
+                                if (filter){
+                                    filter(it)
+                                }else{
+                                    _movies.value = it
+                                }
                             }else{
                                 setError(resource.code, resource.message)
                             }
@@ -58,6 +67,7 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
 
     fun searchMovies(string: String) {
         search.value = string
+        setFilter(false)
     }
 
     fun filter(sourceList: List<Movie>){
@@ -70,6 +80,7 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
                 reset()
             }else{
                 _movies.postValue(list)
+                setFilter(true)
             }
         }
     }
@@ -78,6 +89,7 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
         viewModelScope.launch {
             searchMovie.value?.data?.let {
                 _movies.value = it
+                setFilter(false)
             }
         }
     }
