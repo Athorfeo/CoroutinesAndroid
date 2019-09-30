@@ -18,6 +18,7 @@ import com.athorfeo.source.util.ResponseCode
 import com.athorfeo.source.util.findFieldAnnotation
 import com.athorfeo.source.util.ui.DialogUtil
 import com.google.gson.annotations.SerializedName
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -103,7 +104,7 @@ class MainFragment: BaseFragment(),
 
         val obj = SearchMoviesResponse(0, listOf(), 0, 0)
         val annotation : SerializedName? = obj.findFieldAnnotation("page")
-        Log.i("Annotation", annotation?.value ?: "Vacio")
+        Timber.i(annotation?.value ?: "Vacio")
     }
 
     private fun subcribeUi(adapter: MainAdapter){
@@ -114,6 +115,7 @@ class MainFragment: BaseFragment(),
 
         viewModel.isError.observe(viewLifecycleOwner, Observer {
             it.process()
+            Timber.i("Error")
         })
 
         viewModel.movies.observe(viewLifecycleOwner, Observer { movies ->
@@ -124,5 +126,8 @@ class MainFragment: BaseFragment(),
 
     private fun searchMovie(){
         viewModel.searchMovies(binding.inputSearch.text.toString())
+        /*viewModel.testCoroutines().observe(viewLifecycleOwner, Observer {
+            Timber.i("${it.status}")
+        })*/
     }
 }

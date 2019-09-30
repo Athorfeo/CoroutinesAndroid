@@ -22,12 +22,18 @@ interface MovieDao {
     @Query("SELECT * FROM movies")
     fun getMovies(): LiveData<List<Movie>>
 
+    @Query("SELECT * FROM movies")
+    fun getNormalMovies(): List<Movie>
+
     @Query("SELECT * FROM movies WHERE title LIKE :search")
     suspend fun searchMovies(search: String): List<Movie>
 
     /* INSERT */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(vararg movies: Movie)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAllLong(vararg movies: Movie): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(movie: Movie): Long

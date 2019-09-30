@@ -9,7 +9,10 @@ import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.database.dao.MovieDao
 import com.athorfeo.source.repository.processor.Processor
 import com.athorfeo.source.repository.processor.DatabaseProcessor
+import com.athorfeo.source.repository.processor.SingleDatabaseNetworkProcessor
+import com.athorfeo.source.util.Constants
 import com.athorfeo.source.util.ResponseCode
+import com.athorfeo.source.util.SingleLiveEvent
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -56,6 +59,25 @@ class MovieRepository @Inject constructor(private val movieDao: MovieDao, privat
             override suspend fun query(): Int = movieDao.removeQuantity(movieId)
             override suspend fun isValidQuery(response: Int): Boolean = response > 0
             override fun onSuccessCode(): Int = ResponseCode.DELETE_DATABASE
+        }.asLiveData()
+    }
+
+    fun testCoroutine(): SingleLiveEvent<Resource<List<Long>>>{
+        return object : SingleDatabaseNetworkProcessor<List<Long>, List<Movie>, SearchMoviesResponse>(){
+            override suspend fun saveData(): List<Long> {
+                val usersData = arrayListOf(
+                    Movie(1, "Title", "OriginalTitle", "Overview", 1),
+                    Movie(2, "Title 1", "OriginalTitle 1", "Overview", 1),
+                    Movie(3, "Title 2", "OriginalTitle 2", "Overview", 1)
+                )
+                return movieDao.insertAllLong(*usersData.toTypedArray())
+            }
+
+            override suspend fun isValidQuery(response: List<Long>): Boolean = response.isNotEmpty()
+
+            override suspend fun loadData(): List<Movie> = movieDao.getNormalMovies()
+
+            override suspend fun service(data: List<Movie>): Response<SearchMoviesResponse> = api.searchMovies(Constants.APY_KEY, "Batman", "1")
         }.asLiveData()
     }
 }

@@ -8,8 +8,8 @@ import com.athorfeo.source.repository.MovieRepository
 import com.athorfeo.source.app.viewmodel.BaseViewModel
 import com.athorfeo.source.util.ResponseCode
 import com.athorfeo.source.util.error.ErrorCode
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -101,4 +101,6 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
             repository.removeQuantity(movieId)
         }
 
+
+    fun testCoroutines() = repository.testCoroutine()
 }
