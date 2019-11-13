@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @OpenForTesting
 class MainViewModel @Inject constructor(private val repository: MovieRepository): BaseViewModel(){
-    private val _movies = MediatorLiveData<List<Movie>>()
+    val _movies = MediatorLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> = _movies
 
     private val search = MutableLiveData<String>()

@@ -14,10 +14,12 @@ import com.athorfeo.source.R
 import com.athorfeo.source.api.response.SearchMoviesResponse
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
+import com.athorfeo.source.testing.OpenForTesting
 import com.athorfeo.source.util.ResponseCode
 import com.athorfeo.source.util.findFieldAnnotation
 import com.athorfeo.source.util.ui.DialogUtil
 import com.google.gson.annotations.SerializedName
+import org.jetbrains.annotations.TestOnly
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,6 +29,7 @@ import javax.inject.Inject
  * @author Juan Ortiz
  * @date 10/09/2019
  */
+@OpenForTesting
 class MainFragment: BaseFragment(),
     View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener,
@@ -35,7 +38,7 @@ class MainFragment: BaseFragment(),
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentMainBinding
-    private val viewModel: MainViewModel by viewModels { viewModelFactory }
+    val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)

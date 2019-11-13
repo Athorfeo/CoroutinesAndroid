@@ -19,7 +19,7 @@ open class BaseViewModel: ViewModel() {
     val isLoading: SingleLiveEvent<Boolean> by lazy { SingleLiveEvent<Boolean>().apply { postValue(false) } }
     val isError: SingleLiveEvent<ErrorResource> by lazy { SingleLiveEvent<ErrorResource>()}
 
-    private fun setLoading(boolean: Boolean){ isLoading.value = boolean }
+    fun setLoading(boolean: Boolean){ isLoading.value = boolean }
     private fun postLoading(boolean: Boolean){ isLoading.postValue(boolean) }
 
     fun setError(code: Int?, message: String? = null){ isError.value = ErrorResource(code, message) }

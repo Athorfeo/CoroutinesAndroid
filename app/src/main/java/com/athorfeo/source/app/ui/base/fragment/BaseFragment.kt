@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.athorfeo.source.R
 import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.di.Injectable
+import com.athorfeo.source.testing.OpenForTesting
 import com.athorfeo.source.util.ui.DialogUtil
 import com.athorfeo.source.util.Status
 import com.athorfeo.source.util.error.ErrorCode
@@ -19,6 +21,7 @@ import java.net.HttpURLConnection
  * @author Juan Ortiz
  * @date 10/09/2019
  */
+@OpenForTesting
 open class BaseFragment: Fragment(), Injectable {
     private var loadingDialog: AlertDialog? = null
     private var successDialog: AlertDialog? = null
@@ -154,4 +157,6 @@ open class BaseFragment: Fragment(), Injectable {
             }
         }
     }
+
+    fun navController() = findNavController()
 }
