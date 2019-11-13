@@ -6,6 +6,7 @@ import com.athorfeo.source.app.model.Movie
 import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.repository.MovieRepository
 import com.athorfeo.source.app.viewmodel.BaseViewModel
+import com.athorfeo.source.testing.OpenForTesting
 import com.athorfeo.source.util.ResponseCode
 import com.athorfeo.source.util.error.ErrorCode
 import kotlinx.coroutines.*
@@ -18,6 +19,8 @@ import javax.inject.Inject
  * @author Juan Ortiz
  * @date 10/09/2019
  */
+
+@OpenForTesting
 class MainViewModel @Inject constructor(private val repository: MovieRepository): BaseViewModel(){
     private val _movies = MediatorLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> = _movies

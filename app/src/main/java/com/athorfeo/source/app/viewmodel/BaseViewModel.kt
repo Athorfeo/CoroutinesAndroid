@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.util.Status
 import com.athorfeo.source.app.model.Resource
+import com.athorfeo.source.testing.OpenForTesting
 import com.athorfeo.source.util.SingleLiveEvent
 
 
@@ -13,8 +14,9 @@ import com.athorfeo.source.util.SingleLiveEvent
  * @author Juan Ortiz
  * @date 10/09/2019
  */
+@OpenForTesting
 open class BaseViewModel: ViewModel() {
-    val isLoading: SingleLiveEvent<Boolean> by lazy { SingleLiveEvent<Boolean>().apply { value = false } }
+    val isLoading: SingleLiveEvent<Boolean> by lazy { SingleLiveEvent<Boolean>().apply { postValue(false) } }
     val isError: SingleLiveEvent<ErrorResource> by lazy { SingleLiveEvent<ErrorResource>()}
 
     private fun setLoading(boolean: Boolean){ isLoading.value = boolean }

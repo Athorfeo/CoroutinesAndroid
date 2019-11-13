@@ -2,7 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-allopen'
+
 apply plugin: 'androidx.navigation.safeargs'
+
+allOpen {
+    // allows mocking for classes w/o directly opening them for release builds
+    annotation 'com.athorfeo.source.testing.OpenClass'
+}
 
 android {
     compileSdkVersion 29
@@ -84,10 +91,11 @@ dependencies {
     def timber_version = "4.7.1"
     def espresso_core_version = "3.2.0"
     def espresso_version = "1.2.0"
-    def mockito_version = "2.25.0"
+    def mockito_version = "3.1.0"
     //def mockito_all_version = "1.10.19"
     def mockito_android_version = "2.25.0"
     def coroutines_version = "1.3.1"
+    def testing_version = "1.2.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -150,13 +158,24 @@ dependencies {
 
     /* Test Unit */
     testImplementation 'junit:junit:4.12'
+    androidTestImplementation "androidx.test:core:$testing_version"
+    androidTestImplementation "androidx.test:runner:$testing_version"
+    androidTestImplementation "androidx.test:rules:$testing_version"
+    androidTestImplementation "androidx.test.ext:truth:$testing_version"
+    androidTestImplementation "androidx.test.ext:junit:1.1.1"
+    androidTestImplementation "com.google.truth:truth:0.42"
+
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
     /* Espresso */
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
-    androidTestImplementation "androidx.test:runner:$espresso_version"
-    androidTestImplementation "androidx.test:rules:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_core_version"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_core_version"
+    androidTestImplementation "androidx.test.espresso:espresso-accessibility:$espresso_core_version"
+    androidTestImplementation "androidx.test.espresso:espresso-web:$espresso_core_version"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$espresso_core_version"
+    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$espresso_core_version"
 
     /* Room */
     androidTestImplementation "androidx.room:room-testing:$room_version"
@@ -164,6 +183,7 @@ dependencies {
     /* Mockito */
     //androidTestImplementation "org.mockito:mockito-all:$mockito_all_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "org.mockito:mockito-inline:$mockito_version"
     androidTestImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_android_version"
 }

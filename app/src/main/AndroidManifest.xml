@@ -20,7 +20,7 @@
             android:fullBackupContent="true"
             android:usesCleartextTraffic="true"
             tools:ignore="UnusedAttribute">
-
+        <activity android:name=".testing.SingleFragmentActivity" />
         <activity android:name=".app.ui.base.activity.BaseActivity"/>
 
         <activity android:name="com.athorfeo.source.app.ui.MainActivity"
