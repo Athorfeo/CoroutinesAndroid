@@ -46,13 +46,12 @@ class MainFragmentTest {
         `when`(viewModel._movies).thenReturn(_movies)
         `when`(viewModel.movies).thenReturn(movies)
 
-
         fragment.viewModelFactory =  ViewModelUtil.createFor(viewModel)
         activityRule.activity.setFragment(fragment)
     }
 
     @Test
-    fun example(){
+    fun searchTest(){
         onView(withId(R.id.input_search)).perform(
             typeText("Batman"),
             pressKey(KeyEvent.KEYCODE_ENTER)
@@ -61,6 +60,18 @@ class MainFragmentTest {
         onView(withId(R.id.button_search)).perform(click())
 
         verify(viewModel).searchMovies("Batman")
+    }
+
+    @Test
+    fun resetTest(){
+        onView(withId(R.id.button_reset)).perform(click())
+        verify(viewModel).reset()
+    }
+
+    @Test
+    fun filterTest(){
+        onView(withId(R.id.button_filter)).perform(click())
+        verify(viewModel).filter(listOf())
     }
 
     class TestMainFragment : MainFragment() {
