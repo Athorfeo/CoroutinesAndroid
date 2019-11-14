@@ -1,28 +1,33 @@
 package com.athorfeo.source.ui
 
 import android.view.KeyEvent
+import android.widget.Button
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.athorfeo.source.R
 import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.app.model.Movie
-import com.athorfeo.source.app.ui.MainActivity
+import com.athorfeo.source.app.model.Resource
+import com.athorfeo.source.app.ui.main.MainAdapter
 import com.athorfeo.source.app.ui.main.MainFragment
 import com.athorfeo.source.app.ui.main.MainViewModel
 import com.athorfeo.source.testing.SingleFragmentActivity
-import com.athorfeo.source.util.SingleLiveEvent
-import com.athorfeo.source.util.ViewModelUtil
-import com.athorfeo.source.util.mock
+import com.athorfeo.source.util.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers
 import org.mockito.Mockito.*
 
 @RunWith(AndroidJUnit4::class)
@@ -36,6 +41,7 @@ class MainFragmentTest {
     private val isError = SingleLiveEvent<ErrorResource>()
     private val _movies = MediatorLiveData<List<Movie>>()
     private val movies: LiveData<List<Movie>> = _movies
+    private val updateQuantity = MutableLiveData<Resource<Int>>()
     private val fragment = TestMainFragment()
 
     @Before
@@ -45,8 +51,9 @@ class MainFragmentTest {
         `when`(viewModel.isError).thenReturn(isError)
         `when`(viewModel._movies).thenReturn(_movies)
         `when`(viewModel.movies).thenReturn(movies)
+        `when`(viewModel.updateQuantity(anyBoolean(), anyInt())).thenReturn(updateQuantity)
 
-        fragment.viewModelFactory =  ViewModelUtil.createFor(viewModel)
+        fragment.viewModelFactory = ViewModelUtil.createFor(viewModel)
         activityRule.activity.setFragment(fragment)
     }
 
@@ -72,6 +79,32 @@ class MainFragmentTest {
     fun filterTest(){
         onView(withId(R.id.button_filter)).perform(click())
         verify(viewModel).filter(listOf())
+    }
+
+    @Test
+    fun addQuantity(){
+        val listMovies = listOf(
+            Movie(1, "Batman", "OriginalTitle", "Overview", 0),
+            Movie(2, "Title", "OriginalTitle", "Overview", 0)
+        )
+        _movies.postValue(listMovies)
+        onView(withId(R.id.recycler)).perform(RecyclerViewActions.actionOnItemAtPosition<MainAdapter.ViewHolder>(0, clickChild(R.id.button_add)))
+        verify(viewModel).updateQuantity(true, 1)
+    }
+
+    @Test
+    fun removeQuantity(){
+        val listMovies = listOf(
+            Movie(1, "Batman", "OriginalTitle", "Overview", 0),
+            Movie(2, "Title", "OriginalTitle", "Overview", 0)
+        )
+        _movies.postValue(listMovies)
+        onView(withId(R.id.recycler)).perform(RecyclerViewActions.actionOnItemAtPosition<MainAdapter.ViewHolder>(0, clickChild(R.id.button_remove)))
+        verify(viewModel).updateQuantity(false, 1)
+    }
+
+    private fun listMatcher(): RecyclerViewMatcher {
+        return RecyclerViewMatcher(R.id.recycler)
     }
 
     class TestMainFragment : MainFragment() {
