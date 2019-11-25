@@ -79,17 +79,21 @@ android {
     /* Flavors */
     flavorDimensions "version"
     productFlavors {
-        natives{
+        develop{
             dimension "version"
             applicationId "com.athorfeo.coroutines"
-            applicationIdSuffix ".natives"
-            versionNameSuffix "-natives"
+            applicationIdSuffix ".develop"
+            versionNameSuffix "-develop"
         }
-        hybrids{
+        production{
             dimension "version"
-            applicationIdSuffix ".hybrids"
-            versionNameSuffix "-hybrids"
+            applicationIdSuffix ".production"
+            versionNameSuffix "-production"
         }
+    }
+    configurations {
+        sdkDevelopImplementation
+        sdkProductionImplementation
     }
 }
 
@@ -209,4 +213,9 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:$mockito_version"
     androidTestImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_android_version"
+
+    /* SDK */
+    //implementation project(path: ':utilities')
+    sdkDevelopImplementation project(path: ':utilities', configuration: 'develop')
+    sdkProductionImplementation project(path: ':utilities', configuration: 'production')
 }
