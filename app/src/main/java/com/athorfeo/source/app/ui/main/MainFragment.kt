@@ -19,6 +19,9 @@ import com.athorfeo.source.util.ResponseCode
 import com.athorfeo.source.util.findFieldAnnotation
 import com.athorfeo.source.util.ui.DialogUtil
 import com.google.gson.annotations.SerializedName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.jetbrains.annotations.TestOnly
 import timber.log.Timber
 import javax.inject.Inject
@@ -108,6 +111,8 @@ class MainFragment: BaseFragment(),
         val obj = SearchMoviesResponse(0, listOf(), 0, 0)
         val annotation : SerializedName? = obj.findFieldAnnotation("page")
         Timber.i(annotation?.value ?: "Vacio")
+
+        CoroutineScope(Dispatchers.Main + SupervisorJob())
     }
 
     private fun subcribeUi(adapter: MainAdapter){

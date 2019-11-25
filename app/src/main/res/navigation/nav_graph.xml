@@ -16,4 +16,12 @@
             android:id="@+id/settingsFragment"
             android:name="com.athorfeo.source.app.ui.settings.SettingsFragment"
             android:label="@string/title_settings_fragment" />
+    <fragment
+        android:id="@+id/customFragment"
+        android:name="com.athorfeo.source.app.ui.custom.CustomFragment"
+        android:label="CustomFragment" >
+        <action
+            android:id="@+id/action_customFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 </navigation>

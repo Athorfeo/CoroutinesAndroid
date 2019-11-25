@@ -15,7 +15,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.athorfeo.coroutinesproject"
+        applicationId "com.athorfeo.coroutines"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -23,9 +23,17 @@ android {
         testInstrumentationRunner "com.athorfeo.source.util.AppTestRunner"
     }
     buildTypes {
+        debug{
+            applicationIdSuffix ".debug"
+            debuggable true
+            buildConfigField 'String', 'urlBase', urlDevBase
+            buildConfigField 'String', 'apyKey', apiKey
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'urlBase', urlProBase
+            buildConfigField 'String', 'apyKey', apiKey
         }
     }
     defaultConfig{
@@ -64,9 +72,24 @@ android {
         androidTest.java.srcDirs += "src/test-common/java"
         test.java.srcDirs += "src/test-common/java"
     }
-    productFlavors {}
     kapt {
         generateStubs = true
+    }
+
+    /* Flavors */
+    flavorDimensions "version"
+    productFlavors {
+        natives{
+            dimension "version"
+            applicationId "com.athorfeo.coroutines"
+            applicationIdSuffix ".natives"
+            versionNameSuffix "-natives"
+        }
+        hybrids{
+            dimension "version"
+            applicationIdSuffix ".hybrids"
+            versionNameSuffix "-hybrids"
+        }
     }
 }
 

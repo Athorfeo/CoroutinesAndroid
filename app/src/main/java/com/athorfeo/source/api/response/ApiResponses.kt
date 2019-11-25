@@ -3,6 +3,7 @@ package com.athorfeo.source.api.response
 import android.util.Log
 import com.athorfeo.source.util.Constants
 import retrofit2.Response
+import timber.log.Timber
 import java.net.HttpURLConnection
 
 /**
@@ -15,9 +16,9 @@ import java.net.HttpURLConnection
 sealed class ApiResponse<T>{
     companion object {
         fun <T> create(response: Response<T>): ApiResponse<T> {
-            Log.i(Constants.LOG_I, "URL: ${response.raw().request().url()}")
-            Log.i(Constants.LOG_I, "CODE: ${response.code()}")
-            Log.i(Constants.LOG_I, "MESSAGE: ${response.message()}")
+            Timber.i("URL: ${response.raw().request().url()}")
+            Timber.i( "CODE: ${response.code()}")
+            Timber.i("MESSAGE: ${response.message()}")
 
             // Error = false, Success = true
             val isValid = if(response.isSuccessful){

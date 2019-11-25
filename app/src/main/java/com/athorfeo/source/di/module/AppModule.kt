@@ -2,6 +2,7 @@ package com.athorfeo.source.di.module
 
 import android.app.Application
 import androidx.room.Room
+import com.athorfeo.source.BuildConfig
 import com.athorfeo.source.api.API
 import com.athorfeo.source.database.AppDatabase
 import com.athorfeo.source.database.dao.MovieDao
@@ -29,7 +30,7 @@ class AppModule {
         return Retrofit.Builder()
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BuildConfig.urlBase)
             .build()
             .create(API::class.java)
     }

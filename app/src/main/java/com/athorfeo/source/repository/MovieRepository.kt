@@ -1,6 +1,7 @@
 package com.athorfeo.source.repository
 
 import androidx.lifecycle.*
+import com.athorfeo.source.BuildConfig
 import com.athorfeo.source.api.API
 import com.athorfeo.source.api.SearchMovieRequest
 import com.athorfeo.source.api.response.SearchMoviesResponse
@@ -77,7 +78,7 @@ class MovieRepository @Inject constructor(private val movieDao: MovieDao, privat
 
             override suspend fun loadData(): List<Movie> = movieDao.getNormalMovies()
 
-            override suspend fun service(data: List<Movie>): Response<SearchMoviesResponse> = api.searchMovies(Constants.APY_KEY, "Batman", "1")
+            override suspend fun service(data: List<Movie>): Response<SearchMoviesResponse> = api.searchMovies(BuildConfig.apyKey, "Batman", "1")
         }.asLiveData()
     }
 }
