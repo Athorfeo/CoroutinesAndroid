@@ -2,9 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
+    publishNonDefault true
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
-
 
     defaultConfig {
         minSdkVersion 21
@@ -24,20 +24,8 @@ android {
         }
     }
 
-    publishNonDefault true
     flavorDimensions "version"
-    productFlavors {
-        develop {
-            minSdkVersion 15
-            targetSdkVersion 21
-            compileSdkVersion 21
-        }
-        production {
-            minSdkVersion 15
-            targetSdkVersion 24
-            compileSdkVersion 24
-        }
-    }
+    productFlavors {}
 }
 
 dependencies {
