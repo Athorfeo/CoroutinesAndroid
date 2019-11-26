@@ -10,9 +10,9 @@ import com.athorfeo.source.app.model.ErrorResource
 import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.di.Injectable
 import com.athorfeo.source.testing.OpenForTesting
+import com.athorfeo.source.util.AppCode
 import com.athorfeo.source.util.ui.DialogUtil
 import com.athorfeo.source.util.Status
-import com.athorfeo.source.util.error.ErrorCode
 import java.net.HttpURLConnection
 
 /**
@@ -128,15 +128,15 @@ open class BaseFragment: Fragment(), Injectable {
     protected fun ErrorResource.process(){
         when(this.code){
             /* SYSTEM ERROR */
-            ErrorCode.INTERNET -> {
+            AppCode.NO_INTERNET -> {
                 showError(getString(R.string.error_msg_internet))
             }
-            ErrorCode.QUERY_DATABASE -> {
+            AppCode.QUERY_DATABASE -> {
                 showError(getString(R.string.error_msg_database_query))
             }
 
             /* DATA ERROR */
-            ErrorCode.DATA_EMPTY -> {
+            AppCode.DATA_EMPTY -> {
                 showError(getString(R.string.error_msg_data_empty))
             }
 

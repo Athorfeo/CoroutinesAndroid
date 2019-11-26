@@ -206,6 +206,6 @@ dependencies {
     androidTestImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_android_version"
 
-    /* SDK */
+    /* Library */
     implementation project(":utilities")
 }

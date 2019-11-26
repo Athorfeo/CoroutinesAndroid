@@ -6,7 +6,6 @@ import com.athorfeo.source.BuildConfig
 import com.athorfeo.source.api.API
 import com.athorfeo.source.database.AppDatabase
 import com.athorfeo.source.database.dao.MovieDao
-import com.athorfeo.source.util.Constants
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

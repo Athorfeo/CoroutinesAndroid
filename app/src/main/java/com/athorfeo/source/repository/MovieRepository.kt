@@ -11,8 +11,7 @@ import com.athorfeo.source.database.dao.MovieDao
 import com.athorfeo.source.repository.processor.Processor
 import com.athorfeo.source.repository.processor.DatabaseProcessor
 import com.athorfeo.source.repository.processor.SingleDatabaseNetworkProcessor
-import com.athorfeo.source.util.Constants
-import com.athorfeo.source.util.ResponseCode
+import com.athorfeo.source.util.AppCode
 import com.athorfeo.source.util.SingleLiveEvent
 import retrofit2.Response
 import javax.inject.Inject
@@ -51,7 +50,7 @@ class MovieRepository @Inject constructor(private val movieDao: MovieDao, privat
         return object : DatabaseProcessor<Int>(){
             override suspend fun query(): Int = movieDao.addQuantity(movieId)
             override suspend fun isValidQuery(response: Int): Boolean = response > 0
-            override fun onSuccessCode(): Int = ResponseCode.INSERT_DATABASE
+            override fun onSuccessCode(): Int = AppCode.INSERT_DATABASE
         }.asLiveData()
     }
 
@@ -59,7 +58,7 @@ class MovieRepository @Inject constructor(private val movieDao: MovieDao, privat
         return object : DatabaseProcessor<Int>(){
             override suspend fun query(): Int = movieDao.removeQuantity(movieId)
             override suspend fun isValidQuery(response: Int): Boolean = response > 0
-            override fun onSuccessCode(): Int = ResponseCode.DELETE_DATABASE
+            override fun onSuccessCode(): Int = AppCode.DELETE_DATABASE
         }.asLiveData()
     }
 

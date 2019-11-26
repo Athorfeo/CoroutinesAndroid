@@ -8,8 +8,8 @@ import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.api.response.ApiResponse
 import com.athorfeo.source.api.response.ApiSuccessResponse
 import com.athorfeo.source.app.model.Resource
-import com.athorfeo.source.util.error.ErrorCode
-import com.athorfeo.source.util.error.getCode
+import com.athorfeo.source.util.AppCode
+import com.athorfeo.source.util.getCode
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Response
 import timber.log.Timber
@@ -37,7 +37,7 @@ abstract class NetworkProcessor <T> {
                 setValue(Resource.success(apiResponse.body))
             }
             is ApiEmptyResponse -> {
-                setValue(Resource.error(null, ErrorCode.RESPONSE_EMPTY, "EmptyResponse"))
+                setValue(Resource.error(null, AppCode.RESPONSE_EMTPY, "EmptyResponse"))
             }
             is ApiErrorResponse -> {
                 setValue(Resource.error(null, apiResponse.code, apiResponse.message ?: ""))

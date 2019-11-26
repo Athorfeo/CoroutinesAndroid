@@ -1,16 +1,12 @@
 package com.athorfeo.source.repository.processor
 
-import androidx.lifecycle.*
-import com.athorfeo.source.api.response.ApiEmptyResponse
-import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.api.response.ApiResponse
 import com.athorfeo.source.api.response.ApiSuccessResponse
 import com.athorfeo.source.app.model.Resource
-import com.athorfeo.source.util.ResponseCode
+import com.athorfeo.source.util.AppCode
 import com.athorfeo.source.util.SingleLiveEvent
-import com.athorfeo.source.util.error.ErrorCode
-import com.athorfeo.source.util.error.QueryDatabaseException
-import com.athorfeo.source.util.error.getCode
+import com.athorfeo.source.util.QueryDatabaseException
+import com.athorfeo.source.util.getCode
 import kotlinx.coroutines.*
 import retrofit2.Response
 import timber.log.Timber
@@ -32,8 +28,8 @@ abstract class SingleDatabaseNetworkProcessor <ResultType, DataType, ResponseTyp
         }
     }
 
-    protected open fun onSuccessCode(): Int = ResponseCode.QUERY_DATABASE
-    protected open fun onErrorCode(): Int = ErrorCode.QUERY_DATABASE
+    protected open fun onSuccessCode(): Int = AppCode.QUERY_DATABASE
+    protected open fun onErrorCode(): Int = AppCode.QUERY_DATABASE
 
     protected fun setValue(newValue: Resource<ResultType>) {
         if (result.value != newValue) {

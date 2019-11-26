@@ -6,8 +6,8 @@ import com.athorfeo.source.api.response.ApiErrorResponse
 import com.athorfeo.source.api.response.ApiResponse
 import com.athorfeo.source.api.response.ApiSuccessResponse
 import com.athorfeo.source.app.model.Resource
-import com.athorfeo.source.util.error.ErrorCode
-import com.athorfeo.source.util.error.getCode
+import com.athorfeo.source.util.AppCode
+import com.athorfeo.source.util.getCode
 import kotlinx.coroutines.*
 import retrofit2.Response
 import timber.log.Timber
@@ -65,7 +65,7 @@ abstract class Processor <ResponseType, ResultType>{
                         is ApiEmptyResponse -> {
                             emitSource(
                                 loadFromDb().map {
-                                    Resource.error(it, ErrorCode.RESPONSE_EMPTY, null)
+                                    Resource.error(it, AppCode.RESPONSE_EMTPY, null)
                                 }
                             )
                         }

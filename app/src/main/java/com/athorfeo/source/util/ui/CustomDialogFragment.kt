@@ -32,6 +32,6 @@ class CustomDialogFragment: DialogFragment() {
                 .also {alertDialog ->
                     alertDialog.window?.setBackgroundDrawableResource(R.drawable.bg_dialog_rounded)
                 }
-        } ?: throw IllegalStateException("Activity cannot be null")
+        } ?: throw IllegalArgumentException("Activity cannot be null")
     }
 }

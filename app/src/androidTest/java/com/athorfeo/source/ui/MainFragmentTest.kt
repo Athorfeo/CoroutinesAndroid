@@ -39,8 +39,8 @@ class MainFragmentTest {
     private lateinit var viewModel: MainViewModel
     private val isLoading = SingleLiveEvent<Boolean>()
     private val isError = SingleLiveEvent<ErrorResource>()
-    private val _movies = MediatorLiveData<List<Movie>>()
-    private val movies: LiveData<List<Movie>> = _movies
+    private val mMovies = MediatorLiveData<List<Movie>>()
+    private val movies: LiveData<List<Movie>> = mMovies
     private val updateQuantity = MutableLiveData<Resource<Int>>()
     private val fragment = TestMainFragment()
 
@@ -49,7 +49,7 @@ class MainFragmentTest {
         viewModel = mock(MainViewModel::class.java)
         `when`(viewModel.isLoading).thenReturn(isLoading)
         `when`(viewModel.isError).thenReturn(isError)
-        `when`(viewModel._movies).thenReturn(_movies)
+        `when`(viewModel.mMovies).thenReturn(mMovies)
         `when`(viewModel.movies).thenReturn(movies)
         `when`(viewModel.updateQuantity(anyBoolean(), anyInt())).thenReturn(updateQuantity)
 
@@ -87,7 +87,7 @@ class MainFragmentTest {
             Movie(1, "Batman", "OriginalTitle", "Overview", 0),
             Movie(2, "Title", "OriginalTitle", "Overview", 0)
         )
-        _movies.postValue(listMovies)
+        mMovies.postValue(listMovies)
         onView(withId(R.id.recycler)).perform(RecyclerViewActions.actionOnItemAtPosition<MainAdapter.ViewHolder>(0, clickChild(R.id.button_add)))
         verify(viewModel).updateQuantity(true, 1)
     }
@@ -98,7 +98,7 @@ class MainFragmentTest {
             Movie(1, "Batman", "OriginalTitle", "Overview", 0),
             Movie(2, "Title", "OriginalTitle", "Overview", 0)
         )
-        _movies.postValue(listMovies)
+        mMovies.postValue(listMovies)
         onView(withId(R.id.recycler)).perform(RecyclerViewActions.actionOnItemAtPosition<MainAdapter.ViewHolder>(0, clickChild(R.id.button_remove)))
         verify(viewModel).updateQuantity(false, 1)
     }

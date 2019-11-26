@@ -2,10 +2,9 @@ package com.athorfeo.source.repository.processor
 
 import androidx.lifecycle.*
 import com.athorfeo.source.app.model.Resource
-import com.athorfeo.source.util.ResponseCode
-import com.athorfeo.source.util.error.ErrorCode
-import com.athorfeo.source.util.error.QueryDatabaseException
-import com.athorfeo.source.util.error.getCode
+import com.athorfeo.source.util.AppCode
+import com.athorfeo.source.util.QueryDatabaseException
+import com.athorfeo.source.util.getCode
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -26,8 +25,8 @@ abstract class DatabaseProcessor <T>{
         }
     }
 
-    protected open fun onSuccessCode(): Int = ResponseCode.QUERY_DATABASE
-    protected open fun onErrorCode(): Int = ErrorCode.QUERY_DATABASE
+    protected open fun onSuccessCode(): Int = AppCode.QUERY_DATABASE
+    protected open fun onErrorCode(): Int = AppCode.QUERY_DATABASE
 
     protected fun setValue(newValue: Resource<T>) {
         if (result.value != newValue) {

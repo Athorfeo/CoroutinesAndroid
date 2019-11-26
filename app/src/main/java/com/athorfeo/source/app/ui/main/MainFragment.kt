@@ -1,7 +1,6 @@
 package com.athorfeo.source.app.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,17 +11,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.athorfeo.source.R
 import com.athorfeo.source.api.response.SearchMoviesResponse
+import com.athorfeo.source.app.model.Session
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
 import com.athorfeo.source.testing.OpenForTesting
-import com.athorfeo.source.util.ResponseCode
+import com.athorfeo.source.util.AppCode
 import com.athorfeo.source.util.findFieldAnnotation
 import com.athorfeo.source.util.ui.DialogUtil
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import org.jetbrains.annotations.TestOnly
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -84,8 +83,8 @@ class MainFragment: BaseFragment(),
                 {
                     val message =
                         when(it.code){
-                            ResponseCode.INSERT_DATABASE -> { "Se ha agregado la cantidad correctamente." }
-                            ResponseCode.DELETE_DATABASE -> { "Se ha eliminado la cantidad correctamente." }
+                            AppCode.INSERT_DATABASE -> { "Se ha agregado la cantidad correctamente." }
+                            AppCode.DELETE_DATABASE -> { "Se ha eliminado la cantidad correctamente." }
                             else -> { getString(R.string.success_msg_database_query) }
                         }
 
@@ -108,11 +107,6 @@ class MainFragment: BaseFragment(),
 
         subcribeUi(adapter)
 
-        val obj = SearchMoviesResponse(0, listOf(), 0, 0)
-        val annotation : SerializedName? = obj.findFieldAnnotation("page")
-        Timber.i(annotation?.value ?: "Vacio")
-
-        CoroutineScope(Dispatchers.Main + SupervisorJob())
     }
 
     private fun subcribeUi(adapter: MainAdapter){

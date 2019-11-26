@@ -7,10 +7,8 @@ import com.athorfeo.source.app.model.Resource
 import com.athorfeo.source.repository.MovieRepository
 import com.athorfeo.source.app.viewmodel.BaseViewModel
 import com.athorfeo.source.testing.OpenForTesting
-import com.athorfeo.source.util.ResponseCode
-import com.athorfeo.source.util.error.ErrorCode
+import com.athorfeo.source.util.AppCode
 import kotlinx.coroutines.*
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -22,8 +20,8 @@ import javax.inject.Inject
 
 @OpenForTesting
 class MainViewModel @Inject constructor(private val repository: MovieRepository): BaseViewModel(){
-    val _movies = MediatorLiveData<List<Movie>>()
-    val movies: LiveData<List<Movie>> = _movies
+    val mMovies = MediatorLiveData<List<Movie>>()
+    val movies: LiveData<List<Movie>> = mMovies
 
     private val search = MutableLiveData<String>()
     private val searchMovie: LiveData<Resource<List<Movie>>> = Transformations.switchMap(search){ search ->
@@ -35,11 +33,9 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
     private var filter = false
     private fun setFilter(boolean: Boolean){ filter = boolean }
 
-
-
     init {
         viewModelScope.launch{
-            _movies.addSource(searchMovie){ resource ->
+            mMovies.addSource(searchMovie){ resource ->
                 resource.process(
                     {
                         resource.data?.let {
@@ -47,7 +43,7 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
                                 if (filter){
                                     filter(it)
                                 }else{
-                                    _movies.value = it
+                                    mMovies.value = it
                                 }
                             }else{
                                 setError(resource.code, resource.message)
@@ -57,7 +53,7 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
                     {
                         resource.data?.let{
                             if(it.isNotEmpty()){
-                                _movies.value = it
+                                mMovies.value = it
                             }else{
                                 setError(resource.code, resource.message)
                             }
@@ -74,16 +70,18 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
     }
 
     fun filter(sourceList: List<Movie>){
-        viewModelScope.launch(Dispatchers.Default){
-            //val list = _movies.value?.filter { it.quantity > 0 }
-            val list = sourceList.filter { it.quantity > 0 }
+        viewModelScope.launch{
+            withContext(Dispatchers.Default){
+                //val list = _movies.value?.filter { it.quantity > 0 }
+                val list = sourceList.filter { it.quantity > 0 }
 
-            if(list.isNullOrEmpty()){
-                postError(ErrorCode.DATA_EMPTY)
-                reset()
-            }else{
-                _movies.postValue(list)
-                setFilter(true)
+                if(list.isNullOrEmpty()){
+                    postError(AppCode.DATA_EMPTY)
+                    reset()
+                }else{
+                    mMovies.postValue(list)
+                    setFilter(true)
+                }
             }
         }
     }
@@ -91,7 +89,7 @@ class MainViewModel @Inject constructor(private val repository: MovieRepository)
     fun reset(){
         viewModelScope.launch {
             searchMovie.value?.data?.let {
-                _movies.value = it
+                mMovies.value = it
                 setFilter(false)
             }
         }
