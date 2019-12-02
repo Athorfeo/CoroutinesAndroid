@@ -1,3 +1,3 @@
 package com.athorfeo.utilities
 
-data class User(val name: String)
+data class User(val name: String){}

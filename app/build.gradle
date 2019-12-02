@@ -164,6 +164,13 @@ dependencies {
     /* Timber */
     implementation "com.jakewharton.timber:timber:$timber_version"
 
+    /* Firebase */
+    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+    /* Library */
+    implementation project(":utilities")
+
     /* Test Unit */
     testImplementation 'junit:junit:4.12'
     androidTestImplementation "androidx.test:core:$testing_version"
@@ -193,13 +200,6 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:$mockito_version"
     androidTestImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_android_version"
-
-    /* Firebase */
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-
-    /* Library */
-    implementation project(":utilities")
 }
 
 apply plugin: 'com.google.gms.google-services'
