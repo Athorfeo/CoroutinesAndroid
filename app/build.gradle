@@ -113,14 +113,18 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     /* Default */
-    implementation "androidx.appcompat:appcompat:$app_compat_version"
     implementation "androidx.core:core-ktx:$core_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-    implementation "androidx.cardview:cardview:$cardview_version"
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
     implementation "androidx.preference:preference:$preference_version"
+
+    /* Coroutines */
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    /* view */
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    implementation "androidx.cardview:cardview:$cardview_version"
 
     /* Material */
     implementation "com.google.android.material:material:$material_version"
