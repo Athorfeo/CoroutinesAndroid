@@ -8,6 +8,12 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import timber.log.Timber
 import javax.inject.Inject
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 /**
  * Singleton de aplicación de toda la APP.

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "224163091995",
+    "firebase_url": "https://coroutinesandroid.firebaseio.com",
+    "project_id": "coroutinesandroid",
+    "storage_bucket": "coroutinesandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224163091995:android:5ca5460a353b0ef0df0abe",
+        "android_client_info": {
+          "package_name": "com.athorfeo.coroutines.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224163091995-vh2vgctqm40hboftq6r31olmc7tr32us.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlufbYEmNA_W9MFNL2YwwzX9KdpQdNKDE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224163091995-vh2vgctqm40hboftq6r31olmc7tr32us.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

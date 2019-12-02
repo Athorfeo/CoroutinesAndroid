@@ -10,18 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.athorfeo.source.R
-import com.athorfeo.source.api.response.SearchMoviesResponse
-import com.athorfeo.source.app.model.Session
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
 import com.athorfeo.source.testing.OpenForTesting
 import com.athorfeo.source.util.AppCode
-import com.athorfeo.source.util.findFieldAnnotation
 import com.athorfeo.source.util.ui.DialogUtil
-import com.google.gson.annotations.SerializedName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import timber.log.Timber
 import javax.inject.Inject
 
