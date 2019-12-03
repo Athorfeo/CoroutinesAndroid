@@ -96,7 +96,7 @@ open class BaseFragment: Fragment(), Injectable {
 
     /**
      * Extension que maneja los estados de un Resource.
-     * IMPORTANTE: si se desea modificar esta clase, debe modificar la misma extension del
+     * IMPORTANTE: si se desea modificar esta extension, debe modificar la misma extension del
      * BaseViewModel
      *
      * @author Juan Ortiz
