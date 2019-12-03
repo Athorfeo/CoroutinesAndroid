@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:224163091995:android:5ca5460a353b0ef0df0abe",
         "android_client_info": {
-          "package_name": "com.athorfeo.coroutines"
+          "package_name": "com.athorfeo.coroutines.debug"
         }
       },
       "oauth_client": [

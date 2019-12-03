@@ -21,12 +21,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "com.athorfeo.source.util.AppTestRunner"
+        vectorDrawables.useSupportLibrary = true
 
         buildConfigField 'String', 'apyKey', apiKey
     }
     buildTypes {
         debug{
             applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
             debuggable true
             buildConfigField 'String', 'urlBase', urlDevBase
         }
@@ -36,15 +38,16 @@ android {
             buildConfigField 'String', 'urlBase', urlProBase
         }
     }
-    defaultConfig{
-        vectorDrawables.useSupportLibrary = true
+    dataBinding {
+        enabled = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    testOptions {
-        unitTests.returnDefaultValues = true
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -65,20 +68,9 @@ android {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/INDEX.LIST'
     }
-    dataBinding {
-        enabled = true
-    }
-    sourceSets {
-        androidTest.java.srcDirs += "src/test-common/java"
-        test.java.srcDirs += "src/test-common/java"
-    }
     kapt {
         generateStubs = true
     }
-
-    /* Flavors */
-    flavorDimensions "version"
-    productFlavors {}
 }
 
 dependencies {
@@ -121,7 +113,7 @@ dependencies {
     /* Coroutines */
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
-    /* view */
+    /* View */
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "androidx.cardview:cardview:$cardview_version"
