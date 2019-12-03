@@ -88,7 +88,12 @@ class MainFragmentTest {
             Movie(2, "Title", "OriginalTitle", "Overview", 0)
         )
         mMovies.postValue(listMovies)
-        onView(withId(R.id.recycler)).perform(RecyclerViewActions.actionOnItemAtPosition<MainAdapter.ViewHolder>(0, clickChild(R.id.button_add)))
+        onView(withId(R.id.recycler)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<MainAdapter.ViewHolder>(
+                0,
+                clickChild(R.id.button_add)
+            )
+        )
         verify(viewModel).updateQuantity(true, 1)
     }
 
