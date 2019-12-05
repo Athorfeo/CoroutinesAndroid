@@ -37,7 +37,7 @@ class CustomFragment: BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.button_open_dialog -> {
-                CustomDialogFragment().show(fragmentManager!!, "")
+                CustomDialogFragment.newInstance(3).show(fragmentManager!!, "")
             }
         }
     }
