@@ -27,7 +27,6 @@ import javax.inject.Inject
 @OpenForTesting
 class MainFragment: BaseFragment(),
     View.OnClickListener,
-    SwipeRefreshLayout.OnRefreshListener,
     MainAdapter.SearchMovieItemListener {
 
     @Inject
@@ -59,17 +58,6 @@ class MainFragment: BaseFragment(),
         }
     }
 
-    override fun onRefresh() {
-        activity?.let{
-            DialogUtil.bottomConfirm(
-                it,
-                arrayOf(getString(R.string.text_question_sure_reset)),
-                {searchMovie()},
-                {binding.swipeRefresh.isRefreshing = false}
-            ).show()
-        }
-    }
-
     override fun onClickItem(action: Boolean, movieId: Int) {
         viewModel.updateQuantity(action, movieId).observe(viewLifecycleOwner, Observer {
             it.process(
@@ -93,10 +81,8 @@ class MainFragment: BaseFragment(),
     private fun init(adapter: MainAdapter){
         binding.viewModel = viewModel
         binding.clickListener = this
-        binding.swipeRefresh.setOnRefreshListener(this)
 
         binding.recycler.adapter = adapter
-        binding.recycler.isNestedScrollingEnabled = false
 
         subcribeUi(adapter)
 
@@ -104,7 +90,6 @@ class MainFragment: BaseFragment(),
 
     private fun subcribeUi(adapter: MainAdapter){
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            binding.swipeRefresh.isRefreshing = it
             setLoading(it)
         })
 
