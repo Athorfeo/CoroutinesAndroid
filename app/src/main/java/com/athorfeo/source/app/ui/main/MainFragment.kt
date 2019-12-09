@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.athorfeo.source.R
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
 import com.athorfeo.source.testing.OpenForTesting
 import com.athorfeo.source.util.AppCode
-import com.athorfeo.source.util.ui.DialogUtil
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -85,10 +86,31 @@ class MainFragment: BaseFragment(),
         binding.recycler.adapter = adapter
 
         subcribeUi(adapter)
-
     }
 
     private fun subcribeUi(adapter: MainAdapter){
+        binding.nestedScrollView.setOnScrollChangeListener(
+            NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                (activity as AppCompatActivity).appbar.isActivated = v.canScrollVertically(-1)
+
+                if (scrollY > oldScrollY) {
+                    Timber.i("Scroll DOWN")
+                    (activity as AppCompatActivity).appbar.isActivated = true
+                }
+                if (scrollY < oldScrollY) {
+                    Timber.i("Scroll UP")
+                }
+
+                if (scrollY == 0) {
+                    Timber.i("TOP SCROLL")
+                }
+
+                if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                    Timber.i("BOTTOM SCROLL")
+                }
+            }
+        )
+
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             setLoading(it)
         })
@@ -100,14 +122,10 @@ class MainFragment: BaseFragment(),
 
         viewModel.movies.observe(viewLifecycleOwner, Observer { movies ->
             adapter.submitList(movies)
-            //showSuccess("Este es un mensaje", positiveCallback = {}, negativeCallback = {})
         })
     }
 
     private fun searchMovie(){
         viewModel.searchMovies(binding.inputSearch.text.toString())
-        /*viewModel.testCoroutines().observe(viewLifecycleOwner, Observer {
-            Timber.i("${it.status}")
-        })*/
     }
 }
