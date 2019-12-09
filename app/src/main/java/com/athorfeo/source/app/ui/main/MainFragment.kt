@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.athorfeo.source.R
+import com.athorfeo.source.app.ui.MainActivity
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentMainBinding
 import com.athorfeo.source.testing.OpenForTesting
@@ -91,11 +92,14 @@ class MainFragment: BaseFragment(),
     private fun subcribeUi(adapter: MainAdapter){
         binding.nestedScrollView.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                (activity as AppCompatActivity).appbar.isActivated = v.canScrollVertically(-1)
 
                 if (scrollY > oldScrollY) {
                     Timber.i("Scroll DOWN")
-                    (activity as AppCompatActivity).appbar.isActivated = true
+                    with((activity as MainActivity).appbar){
+                        if(!isActivated){
+                            isActivated = true
+                        }
+                    }
                 }
                 if (scrollY < oldScrollY) {
                     Timber.i("Scroll UP")
@@ -103,6 +107,7 @@ class MainFragment: BaseFragment(),
 
                 if (scrollY == 0) {
                     Timber.i("TOP SCROLL")
+                    (activity as AppCompatActivity).appbar.isActivated = false
                 }
 
                 if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {

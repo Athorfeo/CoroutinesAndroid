@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-data class User(val name: String){
+internal data class User(val name: String){
     fun log(){
         CoroutineScope(Dispatchers.Main).launch{
             withContext(Dispatchers.Default){

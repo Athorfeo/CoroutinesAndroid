@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/nav_graph" app:startDestination="@id/mainFragment">
+            android:id="@+id/nav_graph" app:startDestination="@id/cameraXFragment">
 
     <fragment
             android:id="@+id/mainFragment"
@@ -22,6 +22,14 @@
         android:label="CustomFragment" >
         <action
             android:id="@+id/action_customFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraXFragment"
+        android:name="com.athorfeo.source.app.ui.cameraX.CameraXFragment"
+        android:label="CameraXFragment" >
+        <action
+            android:id="@+id/action_cameraXFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
 </navigation>

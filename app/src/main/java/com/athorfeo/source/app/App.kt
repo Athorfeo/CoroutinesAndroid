@@ -2,6 +2,8 @@ package com.athorfeo.source.app
 
 import android.app.Activity
 import android.app.Application
+import androidx.camera.camera2.Camera2Config
+import androidx.camera.core.CameraXConfig
 import com.athorfeo.source.BuildConfig
 import com.athorfeo.source.di.AppInjector
 import dagger.android.DispatchingAndroidInjector
@@ -15,7 +17,7 @@ import javax.inject.Inject
  * @author Juan Ortiz
  * @date 10/09/2019
  */
-class App: Application(), HasActivityInjector {
+class App: Application(), HasActivityInjector, CameraXConfig.Provider {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
@@ -29,6 +31,10 @@ class App: Application(), HasActivityInjector {
     }
 
     override fun activityInjector() = dispatchingAndroidInjector
+
+    override fun getCameraXConfig(): CameraXConfig {
+        return Camera2Config.defaultConfig(this)
+    }
 
     companion object {
         lateinit var instance: App
