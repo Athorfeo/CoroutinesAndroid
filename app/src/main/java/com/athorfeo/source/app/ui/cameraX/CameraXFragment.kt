@@ -16,6 +16,7 @@ import com.athorfeo.source.R
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentCameraxBinding
 import com.athorfeo.source.testing.OpenForTesting
+import com.athorfeo.source.util.ui.BarcodeDialogFragment
 import com.google.common.util.concurrent.ListenableFuture
 import timber.log.Timber
 import java.util.concurrent.Executors
@@ -27,10 +28,8 @@ import java.util.concurrent.Executors
  * @date 10/09/2019
  */
 @OpenForTesting
-class CameraXFragment: BaseFragment(), View.OnClickListener, ImageAnalysis.Analyzer {
+class CameraXFragment: BaseFragment(), View.OnClickListener{
     private lateinit var binding: FragmentCameraxBinding
-    private val executor = Executors.newSingleThreadExecutor()
-    private lateinit var cameraProviderFuture : ListenableFuture<ProcessCameraProvider>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -44,88 +43,17 @@ class CameraXFragment: BaseFragment(), View.OnClickListener, ImageAnalysis.Analy
         init()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                startCamera()
-            } else {
-                Toast.makeText(context,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
-                activity?.finish()
-            }
-        }
-    }
-
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.button_open_dialog -> {
-
+                fragmentManager?.let {
+                    BarcodeDialogFragment.newInstance().show(it, "DialogBarcode")
+                }
             }
         }
-    }
-
-    override fun analyze(image: ImageProxy, rotationDegrees: Int) {
-        Timber.i("Pasa")
-
-        with(image){
-        }
-
-        image.close()
     }
 
     private fun init(){
         binding.clickListener = this
-        cameraProviderFuture = ProcessCameraProvider.getInstance(context!!)
-
-        if (allPermissionsGranted()) {
-            startCamera()
-        } else {
-            ActivityCompat.requestPermissions(
-                activity!!, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-        }
-    }
-
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(activity?.baseContext!!, it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun startCamera(){
-        cameraProviderFuture.addListener(Runnable {
-            val cameraProvider = cameraProviderFuture.get()
-            bindPreview(cameraProvider)
-        }, ContextCompat.getMainExecutor(context))
-    }
-
-    fun bindPreview(cameraProvider : ProcessCameraProvider) {
-        val preview : Preview = Preview.Builder()
-            .setTargetName("Preview")
-            .build()
-
-        preview.previewSurfaceProvider = binding.previewView.previewSurfaceProvider
-
-        val cameraSelector : CameraSelector = CameraSelector.Builder()
-            .requireLensFacing(LensFacing.BACK)
-            .build()
-
-        val imageAnalysis = ImageAnalysis
-            .Builder()
-            .setTargetResolution(Size(1280, 720))
-            .setBackpressureStrategy(ImageAnalysis.BackpressureStrategy.BLOCK_PRODUCER)
-            .build().also {
-                it.setAnalyzer(executor, this)
-            }
-
-        cameraProvider.bindToLifecycle(
-            viewLifecycleOwner,
-            cameraSelector,
-            imageAnalysis,
-            preview)
-    }
-
-    companion object{
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     }
 }
