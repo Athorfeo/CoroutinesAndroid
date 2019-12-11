@@ -1,38 +1,33 @@
 package com.athorfeo.source.util.ui
 
 import android.Manifest
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.LensFacing
-import androidx.camera.core.Preview
+import androidx.camera.core.*
+import androidx.camera.core.AspectRatio
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.athorfeo.source.R
-import com.athorfeo.source.app.ui.cameraX.CameraXFragment
-import com.athorfeo.source.app.ui.cameraX.ZxingQrCodeAnalyzer
+import com.athorfeo.source.app.ui.cameraX.QrCodeAnalyzer
 import com.athorfeo.source.databinding.DialogBarcodeBinding
-import com.athorfeo.source.di.Injectable
 import com.google.common.util.concurrent.ListenableFuture
-import timber.log.Timber
+import com.google.zxing.Result
 import java.util.concurrent.Executors
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
-class BarcodeDialogFragment: DialogFragment(), View.OnClickListener {
+class BarcodeDialogFragment(
+    private val listener: OnBarcodeListener
+): DialogFragment(), View.OnClickListener{
     private val executor = Executors.newSingleThreadExecutor()
     private lateinit var cameraProviderFuture : ListenableFuture<ProcessCameraProvider>
     private lateinit var binding: DialogBarcodeBinding
@@ -45,7 +40,7 @@ class BarcodeDialogFragment: DialogFragment(), View.OnClickListener {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).also {
-            it.window?.setBackgroundDrawableResource(R.drawable.bg_dialog_rounded)
+            //it.window?.setBackgroundDrawableResource(R.drawable.bg_dialog_rounded)
         }
     }
 
@@ -79,6 +74,11 @@ class BarcodeDialogFragment: DialogFragment(), View.OnClickListener {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        closeDialog()
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
@@ -96,9 +96,14 @@ class BarcodeDialogFragment: DialogFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.button_negative -> {
-                dismiss()
+                closeDialog()
             }
         }
+    }
+
+    private fun closeDialog(){
+        //cameraProviderFuture.get().unbindAll()
+        dismiss()
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
@@ -127,7 +132,10 @@ class BarcodeDialogFragment: DialogFragment(), View.OnClickListener {
             .Builder()
             .setBackpressureStrategy(ImageAnalysis.BackpressureStrategy.KEEP_ONLY_LATEST)
             .build().also {
-                it.setAnalyzer(executor, ZxingQrCodeAnalyzer({result -> Timber.i(result.text)}))
+                it.setAnalyzer(executor, QrCodeAnalyzer{result ->
+                    closeDialog()
+                    listener.onBarcodeSuccess(result)
+                })
             }
 
         cameraProvider.bindToLifecycle(
@@ -142,10 +150,14 @@ class BarcodeDialogFragment: DialogFragment(), View.OnClickListener {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 
         @JvmStatic
-        fun newInstance() =
-            BarcodeDialogFragment().apply {
+        fun newInstance(listener: OnBarcodeListener) =
+            BarcodeDialogFragment(listener).apply {
                 arguments = Bundle().apply {
                 }
             }
+    }
+
+    interface OnBarcodeListener{
+        fun onBarcodeSuccess(result: Result)
     }
 }

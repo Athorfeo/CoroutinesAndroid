@@ -1,25 +1,17 @@
 package com.athorfeo.source.app.ui.cameraX
-import android.Manifest
-import android.content.pm.PackageManager
+
 import android.os.Bundle
-import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.camera.core.*
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.annotation.MainThread
 import androidx.databinding.DataBindingUtil
 import com.athorfeo.source.R
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentCameraxBinding
 import com.athorfeo.source.testing.OpenForTesting
 import com.athorfeo.source.util.ui.BarcodeDialogFragment
-import com.google.common.util.concurrent.ListenableFuture
-import timber.log.Timber
-import java.util.concurrent.Executors
+import com.google.zxing.Result
 
 /**
  * Fragmento que lista las peliculas
@@ -28,7 +20,7 @@ import java.util.concurrent.Executors
  * @date 10/09/2019
  */
 @OpenForTesting
-class CameraXFragment: BaseFragment(), View.OnClickListener{
+class CameraXFragment: BaseFragment(), View.OnClickListener, BarcodeDialogFragment.OnBarcodeListener{
     private lateinit var binding: FragmentCameraxBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,10 +39,17 @@ class CameraXFragment: BaseFragment(), View.OnClickListener{
         when(v?.id){
             R.id.button_open_dialog -> {
                 fragmentManager?.let {
-                    BarcodeDialogFragment.newInstance().show(it, "DialogBarcode")
+                    BarcodeDialogFragment
+                        .newInstance(this)
+                        .show(it, "DialogBarcode")
                 }
             }
         }
+    }
+
+    @MainThread
+    override fun onBarcodeSuccess(result: Result) {
+        binding.lastBarcode = result.text
     }
 
     private fun init(){

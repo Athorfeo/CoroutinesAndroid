@@ -4,16 +4,18 @@ import android.annotation.SuppressLint
 import android.graphics.ImageFormat
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
+import com.athorfeo.source.util.ui.BarcodeDialogFragment
 import com.google.zxing.BinaryBitmap
 import com.google.zxing.MultiFormatReader
 import com.google.zxing.NotFoundException
 import com.google.zxing.PlanarYUVLuminanceSource
 import com.google.zxing.common.HybridBinarizer
 import com.google.zxing.Result
+import timber.log.Timber
 
 /* https://stackoverflow.com/questions/58113159/how-to-use-zxing-wih-android-camerax-to-decode-barcode-and-qr-codes */
-class ZxingQrCodeAnalyzer(
-    private val onQrCodesDetected: (qrCode: Result) -> Unit
+class QrCodeAnalyzer(
+    private val callback: (result: Result) -> Unit
 ) : ImageAnalysis.Analyzer {
 
     companion object {
@@ -54,7 +56,8 @@ class ZxingQrCodeAnalyzer(
                     val result: Result
                     try {
                         result = reader.decode(binaryBitmap)
-                        onQrCodesDetected(result)
+                        callback(result)
+                        Timber.i("Found qrCode")
                     } catch (e: NotFoundException) {
                         e.printStackTrace()
                     }
