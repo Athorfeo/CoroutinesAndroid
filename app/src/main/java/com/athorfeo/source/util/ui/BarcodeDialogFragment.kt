@@ -40,7 +40,7 @@ class BarcodeDialogFragment(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).also {
-            //it.window?.setBackgroundDrawableResource(R.drawable.bg_dialog_rounded)
+            it.window?.setBackgroundDrawableResource(R.drawable.bg_dialog_rounded)
         }
     }
 

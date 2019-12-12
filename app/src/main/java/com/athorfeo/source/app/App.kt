@@ -6,6 +6,7 @@ import androidx.camera.camera2.Camera2Config
 import androidx.camera.core.CameraXConfig
 import com.athorfeo.source.BuildConfig
 import com.athorfeo.source.di.AppInjector
+import com.facebook.stetho.Stetho
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import timber.log.Timber
@@ -26,6 +27,7 @@ class App: Application(), HasActivityInjector, CameraXConfig.Provider {
         instance = this
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+            Stetho.initializeWithDefaults(this)
         }
         AppInjector.init(this)
     }

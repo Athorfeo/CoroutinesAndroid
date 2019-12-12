@@ -6,6 +6,8 @@ import com.athorfeo.source.BuildConfig
 import com.athorfeo.source.api.API
 import com.athorfeo.source.database.AppDatabase
 import com.athorfeo.source.database.dao.MovieDao
+import com.athorfeo.source.util.toJson
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -13,6 +15,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONTokener
+import timber.log.Timber
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
@@ -20,11 +24,16 @@ class AppModule {
     @Provides
     fun provideApiService(): API {
         val client = OkHttpClient.Builder()
-            .addInterceptor(
-                HttpLoggingInterceptor().apply {
-                    this.level = HttpLoggingInterceptor.Level.BODY
+            .apply {
+                if(BuildConfig.DEBUG) {
+                    addInterceptor(
+                        HttpLoggingInterceptor().apply {
+                            this.level = HttpLoggingInterceptor.Level.BODY
+                        }
+                    )
+                    addNetworkInterceptor(StethoInterceptor())
                 }
-            )
+            }
             .build()
         return Retrofit.Builder()
             .client(client)

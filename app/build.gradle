@@ -175,6 +175,10 @@ dependencies {
     /* Zxing */
     implementation 'com.google.zxing:core:3.3.2'
 
+    /* Stetho - Debug */
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
     /* Library */
     implementation project(":utilities")
 

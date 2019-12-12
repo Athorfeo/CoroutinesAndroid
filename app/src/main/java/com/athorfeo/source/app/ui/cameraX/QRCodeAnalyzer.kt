@@ -101,26 +101,26 @@ class QrCodeAnalyzer(
             imageToRotate.width = height
         }
     }
-}
 
-private data class RotatedImage(var byteArray: ByteArray, var width: Int, var height: Int) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
+    private data class RotatedImage(var byteArray: ByteArray, var width: Int, var height: Int) {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
 
-        other as RotatedImage
+            other as RotatedImage
 
-        if (!byteArray.contentEquals(other.byteArray)) return false
-        if (width != other.width) return false
-        if (height != other.height) return false
+            if (!byteArray.contentEquals(other.byteArray)) return false
+            if (width != other.width) return false
+            if (height != other.height) return false
 
-        return true
-    }
+            return true
+        }
 
-    override fun hashCode(): Int {
-        var result = byteArray.contentHashCode()
-        result = 31 * result + width
-        result = 31 * result + height
-        return result
+        override fun hashCode(): Int {
+            var result = byteArray.contentHashCode()
+            result = 31 * result + width
+            result = 31 * result + height
+            return result
+        }
     }
 }
