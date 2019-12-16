@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CoroutinesApp</string>
+    <string name="app_name" translatable="false">Coroutines</string>
 
     <!-- Preferences Key -->
     <string name="preference_key_language" translatable="false">language</string>

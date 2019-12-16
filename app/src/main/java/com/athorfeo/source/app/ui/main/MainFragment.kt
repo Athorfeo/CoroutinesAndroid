@@ -46,8 +46,13 @@ class MainFragment: BaseFragment(),
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
 
+        binding.viewModel = viewModel
+        binding.clickListener = this
+
         val adapter = MainAdapter(this)
-        init(adapter)
+        binding.recycler.adapter = adapter
+
+        subcribeUi(adapter)
     }
 
     override fun onClick(v: View?) {
@@ -79,16 +84,6 @@ class MainFragment: BaseFragment(),
             )
         })
     }
-
-    private fun init(adapter: MainAdapter){
-        binding.viewModel = viewModel
-        binding.clickListener = this
-
-        binding.recycler.adapter = adapter
-
-        subcribeUi(adapter)
-    }
-
     private fun subcribeUi(adapter: MainAdapter){
         binding.nestedScrollView.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
