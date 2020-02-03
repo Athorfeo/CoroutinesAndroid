@@ -39,9 +39,16 @@
         <action
             android:id="@+id/action_dashboardFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/to_cameraOldFragment"
+            app:destination="@id/cameraOldFragment" />
     </fragment>
     <fragment
         android:id="@+id/dialogsFragment"
         android:name="com.athorfeo.source.app.ui.dialogs.DialogsFragment"
         android:label="DialogsFragment" />
+    <fragment
+        android:id="@+id/cameraOldFragment"
+        android:name="com.athorfeo.source.app.ui.cameraOld.CameraOldFragment"
+        android:label="Camera Old" />
 </navigation>

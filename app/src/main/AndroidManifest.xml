@@ -21,6 +21,16 @@
             android:usesCleartextTraffic="true"
             tools:ignore="UnusedAttribute">
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.athorfeo.source.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
         <activity android:name=".testing.SingleFragmentActivity" />
         <activity android:name=".app.ui.base.activity.BaseActivity"/>
 

@@ -81,6 +81,17 @@
                     app:layout_constraintTop_toBottomOf="@+id/button_main" />
 
                 <Button
+                    android:id="@+id/button_camera_old"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{clickListener}"
+                    android:text="Camera Old"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button_camerax" />
+
+                <Button
                     android:id="@+id/button_dialogs"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="0dp"
@@ -88,7 +99,7 @@
                     android:text="Dialogs"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/button_camerax"
+                    app:layout_constraintTop_toBottomOf="@+id/button_camera_old"
                     android:onClick="@{clickListener}"/>
 
                 <Button

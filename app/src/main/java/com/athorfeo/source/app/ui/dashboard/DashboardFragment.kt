@@ -1,8 +1,13 @@
 package com.athorfeo.source.app.ui.dashboard
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.athorfeo.source.BuildConfig
@@ -10,6 +15,8 @@ import com.athorfeo.source.R
 import com.athorfeo.source.app.ui.base.fragment.BaseFragment
 import com.athorfeo.source.databinding.FragmentDashboardBinding
 import com.athorfeo.source.testing.OpenForTesting
+import java.io.File
+import java.io.IOException
 
 /**
  * Fragmento que lista las peliculas
@@ -45,6 +52,11 @@ class DashboardFragment: BaseFragment(), View.OnClickListener {
 
             R.id.button_camerax -> {
                 val direction = DashboardFragmentDirections.actionDashboardFragmentToCameraXFragment()
+                findNavController().navigate(direction)
+            }
+
+            R.id.button_camera_old -> {
+                val direction = DashboardFragmentDirections.toCameraOldFragment()
                 findNavController().navigate(direction)
             }
 

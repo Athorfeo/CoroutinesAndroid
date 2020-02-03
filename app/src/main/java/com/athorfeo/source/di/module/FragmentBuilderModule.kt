@@ -1,6 +1,7 @@
 package com.athorfeo.source.di.module
 
 import androidx.fragment.app.DialogFragment
+import com.athorfeo.source.app.ui.cameraOld.CameraOldFragment
 import com.athorfeo.source.app.ui.dashboard.DashboardFragment
 import com.athorfeo.source.app.ui.cameraX.CameraXFragment
 import com.athorfeo.source.app.ui.custom.CustomFragment
@@ -30,6 +31,9 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun dialogFragment(): DialogsFragment
+
+    @ContributesAndroidInjector
+    abstract fun cameraOldFragment(): CameraOldFragment
 
 
 }
